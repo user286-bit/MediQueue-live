@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediQueue – Contact</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/navbar.css"/>
+  <style>
+    body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1551076805-e1869033e561?w=1920&q=80') center/cover no-repeat fixed;}
+    body::after{content:'';position:fixed;inset:0;z-index:-1;background:rgba(240,240,255,0.96);}
+
+    /* Hero */
+    .page-hero{margin:-36px -40px 36px;position:relative;overflow:hidden;border-radius:0 0 32px 32px;min-height:240px;}
+    @media(max-width:768px){.page-hero{margin:-20px -16px 24px;min-height:180px;}}
+    .ph-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=85') center/cover no-repeat;}
+    .ph-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,0.90),rgba(37,99,235,0.83));}
+    .ph-content{position:relative;z-index:1;padding:56px 60px;color:white;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;}
+    @media(max-width:768px){.ph-content{padding:36px 20px;min-height:180px;}}
+    .ph-tag{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;opacity:0.78;margin-bottom:10px;}
+    .ph-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:900;letter-spacing:-0.02em;margin-bottom:8px;}
+    @media(max-width:768px){.ph-title{font-size:26px;}}
+    .ph-sub{font-size:14px;opacity:0.88;}
+
+    /* Desktop 2 col layout */
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:36px;margin-bottom:36px;}
+    @media(max-width:900px){.contact-layout{grid-template-columns:1fr;}}
+
+    /* Contact info */
+    .contact-info h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:6px;}
+    .contact-info p{font-size:13.5px;color:var(--text-3);line-height:1.7;margin-bottom:24px;}
+    .contact-cards{display:flex;flex-direction:column;gap:12px;}
+    .contact-card{
+      background:white;border:1px solid var(--border);border-radius:16px;padding:18px 16px;
+      display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text);
+      transition:all var(--t);box-shadow:var(--shadow-xs);
+    }
+    .contact-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary-border);}
+    .ci-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+    .ci-icon.blue  {background:var(--blue-50);  border:1px solid var(--primary-border);}
+    .ci-icon.teal  {background:var(--teal-50);  border:1px solid var(--teal-100);}
+    .ci-icon.green {background:var(--green-50); border:1px solid var(--low-border);}
+    .ci-icon.purple{background:var(--purple-100);border:1px solid #ddd6fe;}
+    .ci-label{font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+    .ci-val  {font-size:14px;font-weight:800;color:var(--text);margin-top:2px;}
+
+    /* Image strip */
+    .contact-img-strip{
+      border-radius:18px;overflow:hidden;margin-top:20px;height:160px;position:relative;
+    }
+    .cis-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=900&q=85') center/cover no-repeat;}
+    .cis-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(30,64,175,0.80),rgba(8,145,178,0.72));}
+    .cis-content{position:relative;z-index:1;padding:28px;color:white;}
+    .cis-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:900;margin-bottom:5px;}
+    .cis-sub{font-size:13px;opacity:0.88;}
+
+    /* Form */
+    .form-card{background:white;border:1px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm);}
+    .form-header{position:relative;height:130px;overflow:hidden;}
+    .fh-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&q=85') center/cover no-repeat;}
+    .fh-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,0.92),rgba(8,145,178,0.86));}
+    .fh-content{position:relative;z-index:1;padding:28px 28px;color:white;height:100%;display:flex;flex-direction:column;justify-content:flex-end;}
+    .fh-content h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:900;margin-bottom:4px;}
+    .fh-content p{font-size:13px;opacity:0.88;}
+    .form-body{padding:28px;}
+    .form-group{margin-bottom:18px;}
+    .form-group label{display:block;font-size:11px;font-weight:800;color:var(--text-2);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.08em;}
+    textarea.input{resize:vertical;min-height:120px;}
+    select.input{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:44px;}
+    .submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--blue-600),var(--teal-600));color:white;border:none;border-radius:12px;font-family:var(--font);font-weight:800;font-size:15px;cursor:pointer;transition:all var(--t);display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:var(--shadow-blue);}
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(37,99,235,0.35);}
+    .submit-btn:disabled{opacity:0.55;cursor:not-allowed;transform:none;}
+    .success-banner{display:none;background:var(--low-bg);border:1px solid var(--low-border);border-radius:12px;padding:14px;text-align:center;margin-bottom:16px;}
+    .success-banner.show{display:block;animation:fade-up 0.3s ease;}
+    .success-banner p{font-size:13.5px;font-weight:700;color:var(--green-700);}
+
+    /* FAQ */
+    .faq-section{margin-top:36px;}
+    .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:768px){.faq-grid{grid-template-columns:1fr;}}
+    .faq-item{background:white;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-xs);transition:box-shadow var(--t);}
+    .faq-item:hover{box-shadow:var(--shadow-sm);}
+    .faq-q{padding:18px 20px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);transition:background var(--t);gap:10px;}
+    .faq-q:hover{background:var(--blue-50);}
+    .faq-icon{width:24px;height:24px;background:var(--blue-50);border:1px solid var(--primary-border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--primary);transition:all var(--t);flex-shrink:0;}
+    .faq-q.open .faq-icon{background:var(--primary);color:white;transform:rotate(45deg);}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.2s;font-size:13px;color:var(--text-3);line-height:1.7;padding:0 20px;}
+    .faq-a.open{max-height:200px;padding:0 20px 18px;}
+  </style>
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen"><div class="load-icon">📞</div><p>Loading...</p></div>
+  <div id="mainContent" style="display:none;">
+  <div class="page-container">
+    <div class="page-hero">
+      <div class="ph-img"></div><div class="ph-overlay"></div>
+      <div class="ph-content">
+        <div class="ph-tag">📞 Get in Touch</div>
+        <div class="ph-title">Contact Us</div>
+        <div class="ph-sub">We're here to help you every step of the way. Reach out anytime.</div>
+      </div>
+    </div>
+
+    <div class="contact-layout">
+      <!-- Left col -->
+      <div>
+        <div class="contact-info">
+          <h2>How can we help?</h2>
+          <p>Whether you want to report a data issue, request admin access, or suggest a feature — we respond within 24 hours.</p>
+          <div class="contact-cards stagger">
+            <a href="tel:+919876543210" class="contact-card"><div class="ci-icon blue">📞</div><div><div class="ci-label">Phone</div><div class="ci-val">+91 98765 43210</div></div></a>
+            <a href="mailto:support@mediqueue.in" class="contact-card"><div class="ci-icon teal">✉️</div><div><div class="ci-label">Email</div><div class="ci-val">support@mediqueue.in</div></div></a>
+            <div class="contact-card"><div class="ci-icon green">🕘</div><div><div class="ci-label">Support Hours</div><div class="ci-val">Mon–Sat, 9 AM – 6 PM</div></div></div>
+            <div class="contact-card"><div class="ci-icon purple">📍</div><div><div class="ci-label">Office</div><div class="ci-val">Hi-Tech City, Hyderabad</div></div></div>
+          </div>
+        </div>
+        <div class="contact-img-strip">
+          <div class="cis-img"></div><div class="cis-overlay"></div>
+          <div class="cis-content">
+            <div class="cis-title">📍 MediQueue Headquarters</div>
+            <div class="cis-sub">12 Tech Park, Hi-Tech City, Hyderabad – 500081</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right col – form -->
+      <div>
+        <div class="success-banner" id="successBanner"><p>✅ Message sent! We'll reply within 24 hours.</p></div>
+        <div class="form-card">
+          <div class="form-header">
+            <div class="fh-img"></div><div class="fh-overlay"></div>
+            <div class="fh-content">
+              <h3>📝 Send us a message</h3>
+              <p>Tell us how we can help. We respond promptly.</p>
+            </div>
+          </div>
+          <div class="form-body">
+            <div class="form-group"><label>Your Name</label><input type="text" class="input" id="cName" placeholder="Enter your full name"/></div>
+            <div class="form-group"><label>Email Address</label><input type="email" class="input" id="cEmail" placeholder="your@email.com"/></div>
+            <div class="form-group"><label>Topic</label>
+              <select class="input" id="cTopic">
+                <option value="">Select a topic</option>
+                <option>Hospital crowd data issue</option>
+                <option>Technical bug / error</option>
+                <option>Admin access request</option>
+                <option>Feature suggestion</option>
+                <option>General inquiry</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Your Message</label><textarea class="input" id="cMessage" placeholder="Describe your issue or suggestion..."></textarea></div>
+            <button class="submit-btn" id="submitBtn" onclick="sendMessage()">📤 Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div class="section-label">Frequently Asked Questions</div>
+      <div class="faq-grid stagger">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How often is crowd data updated?<div class="faq-icon">+</div></div><div class="faq-a">Crowd levels are manually updated by hospital staff whenever there is a significant change — usually every 1–2 hours during working hours.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I become an admin?<div class="faq-icon">+</div></div><div class="faq-a">Contact us with your hospital name, designation, and Gmail address. We verify and grant access within 48 hours.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is my personal data safe?<div class="faq-icon">+</div></div><div class="faq-a">Yes. We only use your Google account for login. No sensitive data is stored beyond name and photo. All data secured via Firebase.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I request a hospital to be added?<div class="faq-icon">+</div></div><div class="faq-a">Absolutely! Send the hospital name, address, and phone via the form and we'll add it within 24 hours.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">🏥 MediQueue</div>
+      <div class="footer-tagline">Smarter hospital visits for everyone.</div>
+      <div class="footer-links"><a href="home.html">Home</a><a href="hospital-check.html">Hospitals</a><a href="suggestions.html">Suggestions</a><a href="profile.html">Profile</a></div>
+      <hr class="footer-divider"/>
+      <div class="footer-copy">© 2026 MediQueue · support@mediqueue.in · +91 98765 43210</div>
+    </div>
+  </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    injectNavbar("contact");
+    auth.onAuthStateChanged(user=>{
+      if(!user)return;
+      document.getElementById("loadingScreen").style.display="none";
+      document.getElementById("mainContent").style.display="block";
+      document.getElementById("cName").value=user.displayName||"";
+      document.getElementById("cEmail").value=user.email||"";
+    });
+    function sendMessage(){
+      const name=document.getElementById("cName").value.trim(),email=document.getElementById("cEmail").value.trim(),topic=document.getElementById("cTopic").value,message=document.getElementById("cMessage").value.trim();
+      if(!name||!email||!topic||!message){alert("Please fill in all fields.");return;}
+      const btn=document.getElementById("submitBtn");btn.disabled=true;btn.innerHTML=`<span class="spinner"></span> Sending...`;
+      db.collection("messages").add({name,email,topic,message,sentAt:firebase.firestore.FieldValue.serverTimestamp()})
+        .then(()=>{btn.disabled=false;btn.innerHTML="📤 Send Message";document.getElementById("cTopic").value="";document.getElementById("cMessage").value="";document.getElementById("successBanner").classList.add("show");setTimeout(()=>document.getElementById("successBanner").classList.remove("show"),4000);})
+        .catch(err=>{btn.disabled=false;btn.innerHTML="📤 Send Message";alert("Error: "+err.message);});
+    }
+    function toggleFaq(el){const ans=el.nextElementSibling,isOpen=el.classList.contains("open");document.querySelectorAll(".faq-q").forEach(q=>q.classList.remove("open"));document.querySelectorAll(".faq-a").forEach(a=>a.classList.remove("open"));if(!isOpen){el.classList.add("open");ans.classList.add("open");}}
+  </script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediQueue – Admin Dashboard</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/navbar.css"/>
+  <style>
+    body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=1920&q=80') center/cover no-repeat fixed;}
+    body::after{content:'';position:fixed;inset:0;z-index:-1;background:rgba(245,240,255,0.96);}
+
+    /* Hero */
+    .admin-cover{margin:-36px -40px 36px;position:relative;overflow:hidden;border-radius:0 0 32px 32px;min-height:260px;}
+    @media(max-width:768px){.admin-cover{margin:-20px -16px 24px;min-height:200px;}}
+    .ac-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=85') center/cover no-repeat;}
+    .ac-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(109,40,217,0.92),rgba(30,64,175,0.86));}
+    .ac-content{
+      position:relative;z-index:1;padding:56px 60px;color:white;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:260px;
+    }
+    @media(max-width:768px){.ac-content{padding:36px 20px;min-height:200px;flex-direction:column;align-items:flex-start;}}
+    .ac-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);padding:6px 14px;border-radius:var(--r-full);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
+    .ac-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:900;letter-spacing:-0.02em;margin-bottom:8px;}
+    @media(max-width:768px){.ac-title{font-size:26px;}}
+    .ac-sub{font-size:14px;opacity:0.88;}
+    .ac-right{display:flex;gap:12px;flex-wrap:wrap;}
+    @media(max-width:768px){.ac-right{display:none;}}
+    .ac-stat{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:14px;padding:16px 20px;text-align:center;min-width:110px;}
+    .ac-stat .asv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;}
+    .ac-stat .asl{font-size:10px;opacity:0.82;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
+
+    /* Stats strip */
+    .admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+    @media(max-width:600px){.admin-stats{grid-template-columns:1fr 1fr;}}
+    .as-card{background:white;border:1px solid var(--border);border-radius:18px;padding:20px 16px;text-align:center;box-shadow:var(--shadow-xs);transition:all var(--t);position:relative;overflow:hidden;}
+    .as-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:18px 18px 0 0;}
+    .as-card.c-total::before{background:linear-gradient(90deg,var(--blue-600),var(--blue-500));}
+    .as-card.c-low::before{background:linear-gradient(90deg,var(--green-600),var(--green-500));}
+    .as-card.c-high::before{background:linear-gradient(90deg,var(--red-600),#f87171);}
+    .as-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+    .as-icon{font-size:22px;margin-bottom:8px;}
+    .as-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--text);}
+    .as-lbl{font-size:10px;color:var(--text-3);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
+
+    /* Info banner */
+    .info-banner{border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative;min-height:130px;}
+    .ib-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=1200&q=80') center/cover no-repeat;}
+    .ib-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,145,178,0.92),rgba(5,150,105,0.85));}
+    .ib-content{position:relative;z-index:1;padding:28px 36px;color:white;display:flex;align-items:center;gap:20px;}
+    @media(max-width:768px){.ib-content{padding:22px;flex-direction:column;align-items:flex-start;}}
+    .ib-icon{font-size:44px;flex-shrink:0;}
+    .ib-text h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:900;margin-bottom:5px;}
+    .ib-text p{font-size:13px;opacity:0.90;line-height:1.6;}
+
+    /* Tabs */
+    .tab-bar{display:flex;background:white;border:1px solid var(--border);border-radius:14px;padding:5px;margin-bottom:24px;gap:5px;box-shadow:var(--shadow-xs);}
+    .tab-btn{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--text-3);cursor:pointer;transition:all var(--t);}
+    .tab-btn:hover{background:var(--blue-50);color:var(--primary);}
+    .tab-btn.active{background:linear-gradient(135deg,var(--purple-600),var(--blue-600));color:white;box-shadow:var(--shadow-blue);}
+    .tab-content{display:none;} .tab-content.active{display:block;animation:fade-up 0.3s ease;}
+
+    /* Desktop hospitals grid */
+    .hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    @media(max-width:900px){.hosp-grid{grid-template-columns:1fr;}}
+
+    .hmc{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-xs);transition:box-shadow var(--t);animation:fade-up 0.35s ease both;}
+    .hmc:hover{box-shadow:var(--shadow-md);}
+    .hmc-header{height:80px;position:relative;overflow:hidden;}
+    .hmc-himg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=600&q=75') center/cover no-repeat;}
+    .hmc-hovl{position:absolute;inset:0;}
+    .hmc-hovl.low   {background:linear-gradient(135deg,rgba(5,150,105,0.88),rgba(6,182,212,0.75));}
+    .hmc-hovl.medium{background:linear-gradient(135deg,rgba(217,119,6,0.88),rgba(245,158,11,0.75));}
+    .hmc-hovl.high  {background:linear-gradient(135deg,rgba(185,28,28,0.90),rgba(220,38,38,0.80));}
+    .hmc-htxt{position:absolute;bottom:10px;left:14px;right:14px;color:white;display:flex;justify-content:space-between;align-items:flex-end;}
+    .hmc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:900;}
+    .hmc-body{padding:16px;}
+    .hmc-addr{font-size:12px;color:var(--text-3);margin-bottom:4px;}
+    .hmc-ts{font-size:10.5px;color:var(--text-muted);margin-bottom:12px;}
+    .level-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    .lvl-btn{padding:11px 6px;border:1.5px solid var(--border);background:white;border-radius:10px;font-family:var(--font);font-size:12px;font-weight:800;cursor:pointer;transition:all var(--t);color:var(--text-3);}
+    .lvl-btn:hover{border-color:var(--primary-border);background:var(--blue-50);}
+    .lvl-btn.active-low   {background:var(--low-bg);   color:var(--green-700);border-color:var(--low-border);}
+    .lvl-btn.active-medium{background:var(--medium-bg);color:#92400e;         border-color:var(--medium-border);}
+    .lvl-btn.active-high  {background:var(--high-bg);  color:var(--red-700);  border-color:var(--high-border);}
+    .save-tick{display:none;font-size:12px;font-weight:700;color:var(--green-700);padding:8px 0 0;text-align:center;}
+    .save-tick.show{display:block;animation:fade-up 0.3s ease;}
+
+    /* Log */
+    .log-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+    .log-item:last-child{border-bottom:none;}
+    .log-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+    .log-dot.low{background:var(--low);} .log-dot.medium{background:var(--medium);} .log-dot.high{background:var(--high);}
+    .log-txt{flex:1;color:var(--text-2);font-size:13.5px;line-height:1.5;}
+    .log-time{color:var(--text-muted);font-size:11px;white-space:nowrap;}
+
+    /* Messages */
+    .msg-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    @media(max-width:900px){.msg-grid{grid-template-columns:1fr;}}
+    .msg-card{background:white;border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow-xs);transition:all var(--t);}
+    .msg-card:hover{box-shadow:var(--shadow-sm);}
+    .msg-from{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px;font-family:'Plus Jakarta Sans',sans-serif;}
+    .msg-topic{font-size:11px;color:var(--primary);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;}
+    .msg-body{font-size:13px;color:var(--text-3);line-height:1.6;}
+    .msg-time{font-size:10.5px;color:var(--text-muted);margin-top:10px;}
+  </style>
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen"><div class="load-icon">🔐</div><p>Verifying admin access...</p></div>
+  <div id="mainContent" style="display:none;">
+  <div class="page-container">
+
+    <div class="admin-cover">
+      <div class="ac-img"></div><div class="ac-overlay"></div>
+      <div class="ac-content">
+        <div>
+          <div class="ac-badge">🔐 Restricted Access</div>
+          <div class="ac-title">Hospital Dashboard</div>
+          <div class="ac-sub">Manage crowd levels · Monitor activity · View user messages</div>
+        </div>
+        <div class="ac-right">
+          <div class="ac-stat"><div class="asv" id="acTotal">–</div><div class="asl">Hospitals</div></div>
+          <div class="ac-stat"><div class="asv" id="acLow">–</div><div class="asl">Low Crowd</div></div>
+          <div class="ac-stat"><div class="asv" id="acHigh">–</div><div class="asl">High Crowd</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="admin-stats stagger">
+      <div class="as-card c-total"><div class="as-icon">🏥</div><div class="as-val" id="aTotal">–</div><div class="as-lbl">Total Hospitals</div></div>
+      <div class="as-card c-low"><div class="as-icon">🟢</div><div class="as-val" id="aLow">–</div><div class="as-lbl">Low Crowd</div></div>
+      <div class="as-card c-high"><div class="as-icon">🔴</div><div class="as-val" id="aHigh">–</div><div class="as-lbl">High Crowd</div></div>
+    </div>
+
+    <!-- Info banner -->
+    <div class="info-banner">
+      <div class="ib-img"></div><div class="ib-overlay"></div>
+      <div class="ib-content">
+        <div class="ib-icon">💡</div>
+        <div class="ib-text">
+          <h3>How to Update Crowd Levels</h3>
+          <p>Click Low, Medium, or High on any hospital card below to instantly update the crowd status for all users in real-time. Changes reflect immediately across the app.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('hospitals',this)">🏥 Hospitals</button>
+      <button class="tab-btn"        onclick="switchTab('log',this)">📋 Activity Log</button>
+      <button class="tab-btn"        onclick="switchTab('messages',this)">✉️ Messages</button>
+    </div>
+
+    <div class="tab-content active" id="tab-hospitals">
+      <div class="section-label">Update Crowd Levels</div>
+      <div class="hosp-grid stagger" id="adminHospList"></div>
+    </div>
+
+    <div class="tab-content" id="tab-log">
+      <div class="section-label">Activity Log</div>
+      <div class="card" id="activityLog" style="padding:24px;">
+        <div style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px">No updates in this session yet.</div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-messages">
+      <div class="section-label">User Messages</div>
+      <div class="msg-grid" id="messagesList"></div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">🏥 MediQueue · Admin</div>
+      <div class="footer-links"><a href="home.html">Home</a><a href="hospital-check.html">User View</a><a href="contact.html">Contact</a></div>
+      <hr class="footer-divider"/>
+      <div class="footer-copy">© 2026 MediQueue Admin Panel. Restricted Access.</div>
+    </div>
+  </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    injectNavbar("admin");
+    function listenToHospitals(cb){return db.collection("hospitals").onSnapshot(s=>{cb(s.docs.map(d=>({id:d.id,...d.data()})))});}
+    async function updateCrowdLevel(id,crowd,email){await db.collection("hospitals").doc(id).update({crowd,lastUpdated:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:email});}
+    function formatTimestamp(ts){if(!ts)return"Never";const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);if(diff<60)return"Just now";if(diff<3600)return Math.floor(diff/60)+" min ago";return Math.floor(diff/3600)+" hr ago";}
+    let activityLog=[];
+
+    auth.onAuthStateChanged(async(user)=>{
+      if(!user)return;
+      if(!ADMIN_EMAILS.includes(user.email)){
+        document.getElementById("loadingScreen").innerHTML=`<div style="text-align:center;"><div style="font-size:56px;margin-bottom:16px;">⛔</div><p style="color:var(--red-600);font-weight:800;font-size:18px;">Access Denied</p><p style="color:var(--text-3);font-size:14px;margin:10px 0;">You are not authorised as an admin.</p><a href="home.html" style="color:var(--primary);font-size:14px;font-weight:700;">← Back to Home</a></div>`;
+        return;
+      }
+      document.getElementById("loadingScreen").style.display="none";
+      document.getElementById("mainContent").style.display="block";
+      listenToHospitals(hospitals=>{
+        renderAdminCards(hospitals,user.email);
+        const low=hospitals.filter(h=>h.crowd==="low").length;
+        const high=hospitals.filter(h=>h.crowd==="high").length;
+        ["aTotal","acTotal"].forEach(id=>document.getElementById(id).textContent=hospitals.length);
+        ["aLow","acLow"].forEach(id=>document.getElementById(id).textContent=low);
+        ["aHigh","acHigh"].forEach(id=>document.getElementById(id).textContent=high);
+      });
+      loadMessages();
+    });
+
+    function renderAdminCards(hospitals,adminEmail){
+      document.getElementById("adminHospList").innerHTML=hospitals.map(h=>`
+        <div class="hmc">
+          <div class="hmc-header">
+            <div class="hmc-himg"></div>
+            <div class="hmc-hovl ${h.crowd}"></div>
+            <div class="hmc-htxt">
+              <div class="hmc-name">${h.name}</div>
+              <span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>
+            </div>
+          </div>
+          <div class="hmc-body">
+            <div class="hmc-addr">📍 ${h.address}</div>
+            <div class="hmc-ts">🕐 Updated: ${formatTimestamp(h.lastUpdated)} · by ${h.updatedBy||"System"}</div>
+            <div class="level-row">
+              <button class="lvl-btn ${h.crowd==="low"?"active-low":""}"    onclick="setLevel('${h.id}','low','${h.name}')">🟢 Low</button>
+              <button class="lvl-btn ${h.crowd==="medium"?"active-medium":""}" onclick="setLevel('${h.id}','medium','${h.name}')">🟡 Medium</button>
+              <button class="lvl-btn ${h.crowd==="high"?"active-high":""}"  onclick="setLevel('${h.id}','high','${h.name}')">🔴 High</button>
+            </div>
+            <div class="save-tick" id="tick-${h.id}">✅ Crowd level updated successfully!</div>
+          </div>
+        </div>`).join("");
+    }
+
+    async function setLevel(id,level,name){
+      const user=auth.currentUser;if(!user)return;
+      try{
+        await updateCrowdLevel(id,level,user.email);
+        const tick=document.getElementById("tick-"+id);
+        if(tick){tick.classList.add("show");setTimeout(()=>tick.classList.remove("show"),2500);}
+        activityLog.unshift({hospital:name,level,by:user.email,time:new Date()});
+        if(activityLog.length>20)activityLog.pop();
+      }catch(err){alert("Update failed: "+err.message);}
+    }
+
+    function renderLog(){
+      const el=document.getElementById("activityLog");
+      if(!activityLog.length){el.innerHTML=`<div style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px;">No updates yet in this session.</div>`;return;}
+      el.innerHTML=activityLog.map(e=>`
+        <div class="log-item">
+          <div class="log-dot ${e.level}"></div>
+          <div class="log-txt"><strong>${e.hospital}</strong> marked as <strong>${e.level.toUpperCase()}</strong><br/><span style="color:var(--text-3);font-size:12px;">by ${e.by}</span></div>
+          <div class="log-time">${e.time.toLocaleTimeString()}</div>
+        </div>`).join("");
+    }
+
+    async function loadMessages(){
+      const ml=document.getElementById("messagesList");
+      ml.innerHTML=`<div style="grid-column:1/-1;color:var(--text-muted);font-size:13px;text-align:center;padding:20px;">Loading messages...</div>`;
+      try{
+        const snap=await db.collection("messages").orderBy("sentAt","desc").limit(10).get();
+        if(snap.empty){ml.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">✉️</div><p>No messages yet.</p></div>`;return;}
+        ml.innerHTML=snap.docs.map(doc=>{const m=doc.data();return`
+          <div class="msg-card">
+            <div class="msg-from">👤 ${m.name}</div>
+            <div class="msg-topic">📌 ${m.topic}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">${m.email}</div>
+            <div class="msg-body">${m.message}</div>
+            <div class="msg-time">🕐 ${m.sentAt?m.sentAt.toDate().toLocaleString():"Just now"}</div>
+          </div>`;}).join("");
+      }catch(err){ml.innerHTML=`<p style="grid-column:1/-1;color:var(--red-600);font-size:13px;text-align:center;padding:20px;">Could not load messages: ${err.message}</p>`;}
+    }
+
+    function switchTab(tab,btn){
+      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-"+tab).classList.add("active");
+      if(tab==="log")renderLog();
+    }
+  </script>
+</body>
+</html>

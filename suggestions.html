@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediQueue – Suggestions</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/navbar.css"/>
+  <style>
+    body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1920&q=80') center/cover no-repeat fixed;}
+    body::after{content:'';position:fixed;inset:0;z-index:-1;background:rgba(240,253,244,0.95);}
+
+    /* Hero */
+    .page-hero{margin:-36px -40px 36px;position:relative;overflow:hidden;border-radius:0 0 32px 32px;min-height:240px;}
+    @media(max-width:768px){.page-hero{margin:-20px -16px 24px;min-height:180px;}}
+    .ph-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1600&q=85') center/cover no-repeat;}
+    .ph-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,150,105,0.92),rgba(6,182,212,0.82));}
+    .ph-content{position:relative;z-index:1;padding:56px 60px;color:white;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;}
+    @media(max-width:768px){.ph-content{padding:36px 20px;min-height:180px;}}
+    .ph-tag{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;opacity:0.78;margin-bottom:10px;}
+    .ph-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:900;letter-spacing:-0.02em;margin-bottom:8px;}
+    @media(max-width:768px){.ph-title{font-size:26px;}}
+    .ph-sub{font-size:14px;opacity:0.88;max-width:500px;}
+
+    /* Best choice – emergency style full-width banner */
+    .best-choice-banner{
+      position:relative;border-radius:22px;overflow:hidden;
+      margin-bottom:32px;min-height:260px;
+      box-shadow:0 16px 60px rgba(5,150,105,0.22);
+    }
+    .bc-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=1600&q=85') center/cover no-repeat;}
+    .bc-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(4,120,87,0.94) 0%,rgba(5,150,105,0.88) 50%,rgba(6,182,212,0.80) 100%);}
+    .bc-content{position:relative;z-index:1;padding:44px 56px;color:white;display:flex;align-items:center;justify-content:space-between;gap:32px;min-height:260px;}
+    @media(max-width:900px){.bc-content{padding:32px 24px;flex-direction:column;align-items:flex-start;min-height:auto;}}
+    .bc-left{}
+    .bc-alert-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+    .bc-alert-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.4);
+      padding:6px 14px;border-radius:var(--r-full);
+      font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;
+    }
+    .bc-pulse{width:8px;height:8px;border-radius:50%;background:#86efac;animation:live-pulse 1.4s ease-in-out infinite;}
+    .bc-recommended{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.82;margin-bottom:8px;}
+    .bc-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:34px;font-weight:900;letter-spacing:-0.02em;margin-bottom:6px;}
+    @media(max-width:768px){.bc-name{font-size:24px;}}
+    .bc-addr{font-size:14px;opacity:0.88;margin-bottom:18px;}
+    .bc-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+    .bc-chip{background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.35);color:white;padding:6px 14px;border-radius:var(--r-full);font-size:12px;font-weight:700;}
+    .bc-btn{background:white;color:var(--green-700);padding:14px 28px;border-radius:12px;font-size:14px;font-weight:800;transition:all var(--t);cursor:pointer;border:none;font-family:var(--font);white-space:nowrap;text-decoration:none;display:inline-block;}
+    .bc-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+    .bc-right{text-align:center;flex-shrink:0;}
+    @media(max-width:900px){.bc-right{display:none;}}
+    .bc-big-icon{font-size:100px;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2));animation:load-float 3s ease-in-out infinite;}
+    .bc-rank-label{font-size:13px;font-weight:700;opacity:0.85;margin-top:8px;}
+
+    /* Ranked list – desktop 2 col */
+    .ranked-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+    @media(max-width:900px){.ranked-grid{grid-template-columns:1fr;}}
+
+    .rank-card{
+      background:white;border:1px solid var(--border);border-radius:18px;padding:20px;
+      display:flex;align-items:center;gap:16px;cursor:pointer;transition:all var(--t);
+      box-shadow:var(--shadow-xs);position:relative;overflow:hidden;
+    }
+    .rank-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+    .rank-card.low::before{background:linear-gradient(180deg,var(--green-500),#34d399);}
+    .rank-card.medium::before{background:linear-gradient(180deg,var(--amber-500),#fbbf24);}
+    .rank-card.high::before{background:linear-gradient(180deg,var(--red-600),#f87171);}
+    .rank-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--primary-border);}
+    .rank-num{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0;}
+    .rank-num.r1{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;}
+    .rank-num.r2{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:var(--blue-700);}
+    .rank-num.r3{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:var(--green-700);}
+    .rank-num.rn{background:var(--bg);color:var(--text-3);font-size:15px;}
+    .rank-info{flex:1;}
+    .rank-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:var(--text);}
+    .rank-addr{font-size:11px;color:var(--text-3);margin-top:2px;}
+    .rank-meta{font-size:11px;color:var(--primary);font-weight:700;margin-top:4px;}
+    .rank-ts{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+    /* Crowd chart */
+    .crowd-chart{background:white;border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:32px;box-shadow:var(--shadow-sm);}
+    .chart-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:20px;}
+    .avail-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);}
+    .avail-row:last-child{border-bottom:none;}
+    .avail-name{width:200px;font-size:13px;font-weight:600;color:var(--text-2);flex-shrink:0;}
+    @media(max-width:600px){.avail-name{width:120px;font-size:12px;}}
+    .avail-bar-bg{flex:1;height:8px;background:var(--border);border-radius:99px;overflow:hidden;}
+    .avail-bar-fill{height:100%;border-radius:99px;transition:width 1s ease;}
+    .avail-pct{font-size:12px;color:var(--text-3);width:36px;text-align:right;font-weight:700;flex-shrink:0;}
+
+    /* Tips – desktop grid */
+    .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    @media(max-width:768px){.tips-grid{grid-template-columns:1fr;}}
+    .tip{background:white;border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-xs);transition:all var(--t);}
+    .tip:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+    .tip-icon{font-size:22px;width:48px;height:48px;border-radius:14px;background:var(--blue-50);border:1px solid var(--primary-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .tip-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:5px;font-family:'Plus Jakarta Sans',sans-serif;}
+    .tip-desc{font-size:12.5px;color:var(--text-3);line-height:1.6;}
+  </style>
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen"><div class="load-icon">💡</div><p>Finding best hospitals...</p></div>
+  <div id="mainContent" style="display:none;">
+  <div class="page-container">
+    <div class="page-hero">
+      <div class="ph-img"></div><div class="ph-overlay"></div>
+      <div class="ph-content">
+        <div class="ph-tag">💡 Smart Suggestions</div>
+        <div class="ph-title">Least Crowded Hospitals</div>
+        <div class="ph-sub">Ranked by live crowd data — updated by hospital staff in real-time.</div>
+      </div>
+    </div>
+
+    <div class="section-label">🏆 Best Choice Right Now</div>
+    <div id="topPickContainer"></div>
+
+    <div class="section-label">All Hospitals – Ranked Best First</div>
+    <div class="ranked-grid stagger" id="rankedList"></div>
+
+    <div class="section-label">Crowd Level Overview</div>
+    <div class="crowd-chart">
+      <div class="chart-title">Hospital Crowd Comparison</div>
+      <div id="availChart"></div>
+    </div>
+
+    <div class="section-label">💡 Smart Visit Tips</div>
+    <div class="tips-grid stagger">
+      <div class="tip"><div class="tip-icon">🕗</div><div><div class="tip-title">Best Hours to Visit</div><div class="tip-desc">Hospitals are least crowded between 8–9 AM and after 4 PM. Avoid 10 AM–12 PM peak hours.</div></div></div>
+      <div class="tip"><div class="tip-icon">📅</div><div><div class="tip-title">Best Days of the Week</div><div class="tip-desc">Tuesdays and Thursdays are typically less busy than Mondays and Fridays.</div></div></div>
+      <div class="tip"><div class="tip-icon">📋</div><div><div class="tip-title">Carry Documents Ready</div><div class="tip-desc">Keep Aadhar, insurance card, and previous prescriptions ready to save registration time.</div></div></div>
+      <div class="tip"><div class="tip-icon">📞</div><div><div class="tip-title">Call Ahead</div><div class="tip-desc">Many hospitals offer phone bookings. A quick call can cut waiting time significantly.</div></div></div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">🏥 MediQueue</div>
+      <div class="footer-links"><a href="home.html">Home</a><a href="hospital-check.html">Hospitals</a><a href="contact.html">Contact</a></div>
+      <hr class="footer-divider"/><div class="footer-copy">© 2026 MediQueue. All rights reserved.</div>
+    </div>
+  </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    const HOURS=["8AM","9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM","6PM"];
+    function listenToHospitals(cb){return db.collection("hospitals").onSnapshot(s=>{cb(s.docs.map(d=>({id:d.id,...d.data()})))});}
+    function formatTimestamp(ts){if(!ts)return"Never";const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);if(diff<60)return"Just now";if(diff<3600)return Math.floor(diff/60)+" min ago";return Math.floor(diff/3600)+" hr ago";}
+    function getBestTime(c){const p=HOURS.map((_,i)=>{const h=8+i;if(c==="high")return(h>=9&&h<=13)?"high":(h>=14&&h<=16)?"medium":"low";if(c==="medium")return(h>=10&&h<=12)?"medium":(h>=13&&h<=15)?"high":"low";return(h>=11&&h<=13)?"medium":"low";});const i=p.indexOf("low");return i!==-1?HOURS[i]:"Evening";}
+    function waitTime(c){return{low:"~5 min",medium:"~20 min",high:"~45+ min"}[c]||"Unknown";}
+    function crowdColor(c){return{low:"#10b981",medium:"#f59e0b",high:"#dc2626"}[c]||"#8facc0";}
+    const order={low:0,medium:1,high:2};
+    injectNavbar("suggestions");
+    auth.onAuthStateChanged(async(user)=>{
+      if(!user)return;
+      document.getElementById("loadingScreen").style.display="none";
+      document.getElementById("mainContent").style.display="block";
+      listenToHospitals(hospitals=>{const sorted=[...hospitals].sort((a,b)=>order[a.crowd]-order[b.crowd]);renderSuggestions(sorted);});
+    });
+    function renderSuggestions(sorted){
+      const best=sorted[0];
+      document.getElementById("topPickContainer").innerHTML=`
+        <div class="best-choice-banner">
+          <div class="bc-img"></div><div class="bc-overlay"></div>
+          <div class="bc-content">
+            <div class="bc-left">
+              <div class="bc-alert-row">
+                <div class="bc-alert-badge"><span class="bc-pulse"></span>RECOMMENDED NOW</div>
+              </div>
+              <div class="bc-recommended">⭐ Best Choice — Least Crowded</div>
+              <div class="bc-name">${best.name}</div>
+              <div class="bc-addr">📍 ${best.address}</div>
+              <div class="bc-chips">
+                <span class="bc-chip">🟢 Low Crowd</span>
+                <span class="bc-chip">⏱ ${waitTime(best.crowd)} Wait</span>
+                <span class="bc-chip">✅ Best: ${getBestTime(best.crowd)}</span>
+                <span class="bc-chip">🕐 ${formatTimestamp(best.lastUpdated)}</span>
+              </div>
+              <a href="hospital-check.html" class="bc-btn">View Full Details →</a>
+            </div>
+            <div class="bc-right">
+              <div class="bc-big-icon">🏆</div>
+              <div class="bc-rank-label">#1 Recommended</div>
+            </div>
+          </div>
+        </div>`;
+      const rc=["r1","r2","r3"],re=["🥇","🥈","🥉"];
+      document.getElementById("rankedList").innerHTML=sorted.map((h,i)=>`
+        <div class="rank-card ${h.crowd}" onclick="window.location.href='hospital-check.html'">
+          <div class="rank-num ${rc[i]||'rn'}">${re[i]||(i+1)}</div>
+          <div class="rank-info">
+            <div class="rank-name">${h.name}</div>
+            <div class="rank-addr">📍 ${h.address}</div>
+            <div class="rank-meta">⏱ ${waitTime(h.crowd)} &nbsp;·&nbsp; Best: ${getBestTime(h.crowd)}</div>
+            <div class="rank-ts">🕐 ${formatTimestamp(h.lastUpdated)}</div>
+          </div>
+          <span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>
+        </div>`).join("");
+      document.getElementById("availChart").innerHTML=sorted.map(h=>{const pct={low:18,medium:58,high:92}[h.crowd];return`
+        <div class="avail-row">
+          <div class="avail-name">${h.name}</div>
+          <div class="avail-bar-bg"><div class="avail-bar-fill" style="width:${pct}%;background:${crowdColor(h.crowd)};"></div></div>
+          <div class="avail-pct">${pct}%</div>
+        </div>`;}).join("");
+    }
+  </script>
+</body>
+</html>

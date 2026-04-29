@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediQueue – Sign In</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <style>
+    body { padding-top:0; min-height:100dvh; display:flex; flex-direction:column; }
+
+    /* ── Animated background ── */
+    .login-bg {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 60%, #1e3a8a 100%);
+      z-index: -1;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      animation: float 6s ease-in-out infinite;
+    }
+    .blob:nth-child(1){ width:260px; height:260px; top:-60px; right:-60px; animation-delay:0s; }
+    .blob:nth-child(2){ width:180px; height:180px; bottom:80px; left:-50px; animation-delay:2s; }
+    .blob:nth-child(3){ width:120px; height:120px; top:40%; left:20%; animation-delay:4s; }
+    @keyframes float {
+      0%,100%{ transform:translateY(0) scale(1); }
+      50%     { transform:translateY(-20px) scale(1.05); }
+    }
+
+    /* ── Floating icons ── */
+    .floating-icons {
+      position: fixed; inset:0; z-index:0; pointer-events:none;
+    }
+    .f-icon {
+      position: absolute;
+      font-size: 28px;
+      opacity: 0.12;
+      animation: floatIcon 8s ease-in-out infinite;
+    }
+    .f-icon:nth-child(1){ top:12%; left:8%;  animation-delay:0s;  }
+    .f-icon:nth-child(2){ top:25%; right:10%; animation-delay:1.5s;}
+    .f-icon:nth-child(3){ top:55%; left:5%;  animation-delay:3s;  }
+    .f-icon:nth-child(4){ top:70%; right:8%; animation-delay:0.8s;}
+    .f-icon:nth-child(5){ top:40%; right:20%;animation-delay:2.5s;}
+    @keyframes floatIcon {
+      0%,100%{ transform:translateY(0) rotate(0deg); }
+      50%    { transform:translateY(-25px) rotate(10deg); }
+    }
+
+    /* ── Main card ── */
+    .login-wrap {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+    }
+
+    .login-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 40px 28px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+      animation: cardIn 0.6s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes cardIn {
+      from{ opacity:0; transform:translateY(40px) scale(0.96); }
+      to  { opacity:1; transform:translateY(0) scale(1); }
+    }
+
+    /* Logo */
+    .login-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .login-logo .icon-wrap {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #0ea5e9, #0369a1);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 24px rgba(14,165,233,0.35);
+    }
+    .login-logo h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .login-logo p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Features */
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .feature-item .f-dot {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Google Button */
+    #googleLoginBtn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    #googleLoginBtn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 16px rgba(14,165,233,0.15);
+      transform: translateY(-1px);
+    }
+    #googleLoginBtn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+    /* Terms */
+    .terms {
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+    .terms a { color: var(--primary); }
+
+    /* Footer */
+    .login-footer {
+      position: relative; z-index:10;
+      text-align: center;
+      padding: 16px;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body class="no-nav">
+
+  <!-- Background -->
+  <div class="login-bg">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+  <div class="floating-icons">
+    <span class="f-icon">🏥</span>
+    <span class="f-icon">💊</span>
+    <span class="f-icon">🩺</span>
+    <span class="f-icon">❤️</span>
+    <span class="f-icon">🧬</span>
+  </div>
+
+  <!-- Card -->
+  <div class="login-wrap">
+    <div class="login-card">
+
+      <!-- Logo -->
+      <div class="login-logo">
+        <div class="icon-wrap">🏥</div>
+        <h1>MediQueue</h1>
+        <p>Check hospital crowd before you leave home</p>
+      </div>
+
+      <!-- Features -->
+      <div class="features">
+        <div class="feature-item">
+          <div class="f-dot">🔴</div>
+          <span>Real-time crowd levels at hospitals</span>
+        </div>
+        <div class="feature-item">
+          <div class="f-dot">⏰</div>
+          <span>Best time predictions to visit</span>
+        </div>
+        <div class="feature-item">
+          <div class="f-dot">📍</div>
+          <span>Find nearest less-crowded hospitals</span>
+        </div>
+      </div>
+
+      <div class="divider">Sign in to continue</div>
+
+      <!-- Google Login Button -->
+      <button id="googleLoginBtn" onclick="loginWithGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22" alt="Google"/>
+        Continue with Google
+      </button>
+
+      <p class="terms">
+        By signing in, you agree to our
+        <a href="contact.html">Terms of Service</a> and
+        <a href="contact.html">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="login-footer">© 2026 MediQueue · Made for better healthcare access</div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
