@@ -7,22 +7,23 @@
   <link rel="stylesheet" href="css/global.css"/>
   <link rel="stylesheet" href="css/navbar.css"/>
   <style>
-    /* Full page background */
+    body{overflow-x:hidden;}
     body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=1920&q=80') center/cover no-repeat fixed;}
     body::after{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,rgba(240,246,255,0.96) 0%,rgba(235,242,255,0.94) 60%,rgba(236,254,255,0.92) 100%);}
 
-    /* Hero */
+    /* Hero – NO border radius */
     .hero{
       background:linear-gradient(135deg,var(--blue-700) 0%,var(--blue-600) 50%,var(--teal-600) 100%);
-      margin:-36px -40px 40px;border-radius:0 0 36px 36px;
+      margin:-36px -40px 40px;
+      border-radius:0;
       position:relative;overflow:hidden;
-      box-shadow:0 16px 60px rgba(37,99,235,0.25);
+      box-shadow:0 8px 40px rgba(37,99,235,0.20);
     }
-    @media(max-width:768px){.hero{margin:-20px -16px 28px;border-radius:0 0 28px 28px;}}
+    @media(max-width:768px){.hero{margin:-20px -16px 28px;}}
     .hero-bg-img{
       position:absolute;inset:0;
       background:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=80') center/cover no-repeat;
-      opacity:0.12;
+      opacity:0.10;
     }
     .hero-inner{
       position:relative;z-index:1;
@@ -38,14 +39,14 @@
     .hero-search{
       display:flex;gap:0;
       background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);
-      border:1.5px solid rgba(255,255,255,0.3);border-radius:14px;overflow:hidden;
+      border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;overflow:hidden;
     }
     .hero-search input{flex:1;border:none;outline:none;background:transparent;font-family:var(--font);font-size:14px;color:white;padding:14px 18px;}
     .hero-search input::placeholder{color:rgba(255,255,255,0.6);}
-    .hero-search button{background:white;color:var(--blue-700);border:none;padding:14px 22px;font-weight:800;font-size:13px;font-family:var(--font);transition:all var(--t);white-space:nowrap;}
+    .hero-search button{background:white;color:var(--blue-700);border:none;padding:14px 22px;font-weight:800;font-size:13px;font-family:var(--font);transition:all var(--t);white-space:nowrap;flex-shrink:0;}
     .hero-search button:hover{background:var(--blue-50);}
 
-    /* Right side of hero – stat cards */
+    /* Right side hero stat cards */
     .hero-right{display:flex;flex-direction:column;gap:14px;}
     @media(max-width:900px){.hero-right{display:none;}}
     .hero-stat-card{
@@ -61,10 +62,10 @@
     .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;}
     @media(max-width:768px){.stats-strip{grid-template-columns:1fr 1fr;}}
     .stat-card{
-      background:white;border:1px solid var(--border);border-radius:18px;padding:22px 18px;
+      background:white;border:1px solid var(--border);border-radius:16px;padding:22px 18px;
       text-align:center;box-shadow:var(--shadow-sm);transition:all var(--t);position:relative;overflow:hidden;
     }
-    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:18px 18px 0 0;}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
     .stat-card.sc-blue::before{background:linear-gradient(90deg,var(--blue-600),var(--blue-500));}
     .stat-card.sc-green::before{background:linear-gradient(90deg,var(--green-600),var(--green-500));}
     .stat-card.sc-red::before{background:linear-gradient(90deg,var(--red-600),#f87171);}
@@ -74,19 +75,16 @@
     .stat-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:900;color:var(--text);}
     .stat-lbl{font-size:11px;color:var(--text-3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
 
-    /* Desktop two column layout */
-    .main-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;margin-bottom:36px;}
-    @media(max-width:1000px){.main-grid{grid-template-columns:1fr;}}
-
-    /* Quick actions */
-    .quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+    /* Quick actions – full width grid */
+    .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+    @media(max-width:900px){.quick-actions{grid-template-columns:1fr 1fr;}}
     .qa-btn{
-      background:white;border:1px solid var(--border);border-radius:18px;padding:22px 18px;
+      background:white;border:1px solid var(--border);border-radius:16px;padding:22px 18px;
       display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--text);
       transition:all var(--t);box-shadow:var(--shadow-xs);
     }
     .qa-btn:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--primary-border);}
-    .qa-icon{font-size:24px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .qa-icon{font-size:22px;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
     .qa-btn.q1 .qa-icon{background:var(--blue-50);}
     .qa-btn.q2 .qa-icon{background:var(--green-50);}
     .qa-btn.q3 .qa-icon{background:var(--teal-50);}
@@ -94,38 +92,69 @@
     .qa-title{font-size:14px;font-weight:800;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;}
     .qa-sub{font-size:11.5px;color:var(--text-3);margin-top:2px;}
 
-    /* Live panel */
-    .live-panel{background:white;border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow-sm);}
-    .live-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+    /* Live panel – full width BELOW quick actions */
+    .live-panel{
+      background:white;border:1px solid var(--border);border-radius:16px;
+      padding:24px;margin-bottom:28px;box-shadow:var(--shadow-sm);
+    }
+    .live-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
     .live-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
-    .view-all{font-size:12px;color:var(--primary);font-weight:700;text-decoration:none;transition:opacity var(--t);}
+    .view-all{font-size:13px;color:var(--primary);font-weight:700;text-decoration:none;transition:opacity var(--t);}
     .view-all:hover{opacity:0.7;}
-    .live-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all var(--t);}
-    .live-item:last-child{border-bottom:none;padding-bottom:0;}
-    .live-item:hover{padding-left:8px;}
-    .live-name{font-size:13.5px;font-weight:700;color:var(--text);}
+    /* Grid of live items for desktop */
+    .live-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+    @media(max-width:900px){.live-grid{grid-template-columns:1fr;}}
+    .live-item{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;border-bottom:1px solid var(--border);
+      cursor:pointer;transition:all var(--t);
+    }
+    .live-item:hover{background:var(--blue-50);border-radius:10px;}
+    /* Remove bottom border from last row on desktop */
+    @media(min-width:900px){
+      .live-item:nth-last-child(-n+3){border-bottom:none;}
+      .live-item:nth-child(3n){border-right:none;}
+      .live-item:not(:nth-child(3n)){border-right:1px solid var(--border);}
+    }
+    @media(max-width:900px){.live-item:last-child{border-bottom:none;}}
+    .live-name{font-size:13px;font-weight:700;color:var(--text);}
     .live-meta{font-size:11px;color:var(--text-3);margin-top:2px;}
 
-    /* Feature section image */
+    /* Feature section – full width, NO border radius on edges */
     .feature-img-section{
-      border-radius:22px;overflow:hidden;margin-bottom:28px;
-      position:relative;min-height:220px;
+      border-radius:16px;overflow:hidden;margin-bottom:28px;
+      position:relative;min-height:200px;
     }
     .fis-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1600&q=85') center/cover no-repeat;}
     .fis-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,150,105,0.92),rgba(6,182,212,0.82));}
-    .fis-content{position:relative;z-index:1;padding:40px 48px;color:white;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+    .fis-content{
+      position:relative;z-index:1;padding:40px 48px;color:white;
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+    }
     @media(max-width:768px){.fis-content{padding:28px 22px;flex-direction:column;align-items:flex-start;}}
     .fis-text h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:900;margin-bottom:8px;letter-spacing:-0.02em;}
     @media(max-width:768px){.fis-text h2{font-size:20px;}}
     .fis-text p{font-size:14px;opacity:0.9;max-width:400px;line-height:1.6;}
-    .fis-btn{flex-shrink:0;background:white;color:var(--green-700);padding:14px 26px;border-radius:12px;font-size:14px;font-weight:800;transition:all var(--t);white-space:nowrap;text-decoration:none;display:inline-block;}
-    .fis-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+    /* FIXED BUTTON – white bg with dark text, clearly visible */
+    .fis-btn{
+      flex-shrink:0;
+      background:white;
+      color:var(--green-700);
+      padding:14px 28px;
+      border-radius:10px;
+      font-size:14px;font-weight:800;
+      transition:all var(--t);white-space:nowrap;
+      text-decoration:none;display:inline-block;
+      border:2px solid white;
+      box-shadow:0 4px 16px rgba(0,0,0,0.15);
+    }
+    .fis-btn:hover{background:var(--green-50);color:var(--green-700);transform:translateY(-2px);}
 
     /* Steps */
     .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
     @media(max-width:900px){.steps-grid{grid-template-columns:1fr 1fr;}}
     @media(max-width:480px){.steps-grid{grid-template-columns:1fr;}}
-    .step-card{background:white;border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:var(--shadow-xs);transition:all var(--t);}
+    .step-card{background:white;border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow-xs);transition:all var(--t);}
     .step-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
     .step-num{width:44px;height:44px;background:linear-gradient(135deg,var(--blue-600),var(--teal-600));border-radius:12px;color:white;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:var(--shadow-blue);}
     .step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;font-family:'Plus Jakarta Sans',sans-serif;}
@@ -167,32 +196,28 @@
       <div class="stat-card sc-teal"><div class="stat-icon">🟡</div><div class="stat-val" id="statMed">–</div><div class="stat-lbl">Medium Crowd</div></div>
     </div>
 
-    <!-- Main 2-col grid -->
-    <div class="main-grid">
-      <div>
-        <div class="section-label">Quick Actions</div>
-        <div class="quick-grid stagger">
-          <a href="hospital-check.html" class="qa-btn q1"><div class="qa-icon">🔍</div><div><div class="qa-title">Check Crowd</div><div class="qa-sub">Live crowd levels</div></div></a>
-          <a href="suggestions.html"    class="qa-btn q2"><div class="qa-icon">💡</div><div><div class="qa-title">Suggestions</div><div class="qa-sub">Least crowded near you</div></div></a>
-          <a href="profile.html"        class="qa-btn q3"><div class="qa-icon">👤</div><div><div class="qa-title">My Profile</div><div class="qa-sub">Account settings</div></div></a>
-          <a href="contact.html"        class="qa-btn q4"><div class="qa-icon">📞</div><div><div class="qa-title">Contact</div><div class="qa-sub">Help &amp; support</div></div></a>
-        </div>
-      </div>
+    <!-- Quick Actions – FULL WIDTH -->
+    <div class="section-label">Quick Actions</div>
+    <div class="quick-actions stagger">
+      <a href="hospital-check.html" class="qa-btn q1"><div class="qa-icon">🔍</div><div><div class="qa-title">Check Crowd</div><div class="qa-sub">Live crowd levels</div></div></a>
+      <a href="suggestions.html"    class="qa-btn q2"><div class="qa-icon">💡</div><div><div class="qa-title">Suggestions</div><div class="qa-sub">Least crowded near you</div></div></a>
+      <a href="profile.html"        class="qa-btn q3"><div class="qa-icon">👤</div><div><div class="qa-title">My Profile</div><div class="qa-sub">Account settings</div></div></a>
+      <a href="contact.html"        class="qa-btn q4"><div class="qa-icon">📞</div><div><div class="qa-title">Contact</div><div class="qa-sub">Help &amp; support</div></div></a>
+    </div>
 
-      <!-- Live panel -->
-      <div>
-        <div class="section-label"><span class="live-badge"><span class="live-dot"></span>LIVE</span> &nbsp;Hospital Status</div>
-        <div class="live-panel">
-          <div class="live-head">
-            <div class="live-title">Current Status</div>
-            <a href="hospital-check.html" class="view-all">View all →</a>
-          </div>
-          <div id="liveList"><div style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px">Loading...</div></div>
-        </div>
+    <!-- Live Status – BELOW quick actions, full width -->
+    <div class="section-label"><span class="live-badge"><span class="live-dot"></span>LIVE</span> &nbsp;Hospital Status</div>
+    <div class="live-panel">
+      <div class="live-head">
+        <div class="live-title">Current Status</div>
+        <a href="hospital-check.html" class="view-all">View all hospitals →</a>
+      </div>
+      <div class="live-grid" id="liveList">
+        <div style="color:var(--text-muted);font-size:13px;padding:20px">Loading...</div>
       </div>
     </div>
 
-    <!-- Feature section with background image -->
+    <!-- Feature banner -->
     <div class="feature-img-section">
       <div class="fis-img"></div><div class="fis-overlay"></div>
       <div class="fis-content">
@@ -210,7 +235,7 @@
       <div class="step-card"><div class="step-num">1</div><div class="step-title">Staff Updates Level</div><div class="step-desc">Hospital admin marks crowd as Low, Medium, or High in real-time from the app.</div></div>
       <div class="step-card"><div class="step-num">2</div><div class="step-title">Data Syncs Instantly</div><div class="step-desc">Firebase pushes the live update to all users immediately — no refresh needed.</div></div>
       <div class="step-card"><div class="step-num">3</div><div class="step-title">You Check at Home</div><div class="step-desc">Open MediQueue, see the current crowd and AI-predicted best visit window.</div></div>
-      <div class="step-card"><div class="step-num">4</div><div class="step-title">Visit Smarter</div><div class="step-desc">Save time, skip the queue, and get better healthcare access — every single time.</div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-title">Visit Smarter</div><div class="step-desc">Save time, skip the queue, and get better healthcare access — every time.</div></div>
     </div>
 
   </div>
@@ -240,9 +265,6 @@
       if(!user)return;
       document.getElementById("loadingScreen").style.display="none";
       document.getElementById("mainContent").style.display="block";
-      const hour=new Date().getHours();
-      const g=hour<12?"Good Morning":hour<17?"Good Afternoon":"Good Evening";
-      const first=(user.displayName||"User").split(" ")[0];
 
       const hospitals=await fetchHospitals();
       const low=hospitals.filter(h=>h.crowd==="low").length;
@@ -256,9 +278,12 @@
       document.getElementById("statMed").textContent=med;
 
       const ll=document.getElementById("liveList");
-      ll.innerHTML=hospitals.slice(0,5).map(h=>`
+      ll.innerHTML=hospitals.map(h=>`
         <div class="live-item" onclick="window.location.href='hospital-check.html'">
-          <div><div class="live-name">${h.name}</div><div class="live-meta">📍 ${h.address} · ⏱ ${waitTime(h.crowd)} wait</div></div>
+          <div>
+            <div class="live-name">${h.name}</div>
+            <div class="live-meta">📍 ${h.address} · ⏱ ${waitTime(h.crowd)}</div>
+          </div>
           <span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>
         </div>`).join("");
     });
