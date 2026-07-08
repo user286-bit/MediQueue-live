@@ -195,11 +195,10 @@ firestore/
 - Admin access is controlled by `ADMIN_EMAILS` in `firebase-config.js`
 - Non-admin users who visit `admin.html` are **automatically blocked** and redirected
 - Firestore rules ensure only authenticated users can read/write data
-- For production, update Firestore rules to restrict writes to admin emails only
 
 ---
 
-© 2026 MediQueue — Built for better healthcare access.
+© 2026 MediQueue — Smarter hospital visits for everyone in Hyderabad.
 
 ---
 
