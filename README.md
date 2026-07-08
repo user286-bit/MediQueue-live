@@ -1,4 +1,4 @@
-# 🏥 MediQueue — Smart Hospital Crowd Management
+# MediQueue — Smart Hospital Crowd Management
 
 > **Check hospital crowd levels before you leave home.**
 > Real-time data · AI predictions · Built for Hyderabad
