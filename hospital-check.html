@@ -9,16 +9,10 @@
   <style>
     html,body{overflow-x:hidden;max-width:100vw;}
     body{overflow-x:hidden;}
-    /* Full page background */
     body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1920&q=80') center/cover no-repeat fixed;}
     body::after{content:'';position:fixed;inset:0;z-index:-1;background:rgba(240,244,255,0.95);}
 
-    /* Hero banner */
-    .page-hero{
-      margin:-36px -40px 36px;
-      position:relative;overflow:hidden;
-      border-radius:0;min-height:240px;
-    }
+    .page-hero{margin:-36px -40px 36px;position:relative;overflow:hidden;border-radius:0;min-height:240px;}
     @media(max-width:768px){.page-hero{margin:-20px -16px 24px;min-height:180px;}}
     .ph-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=85') center/cover no-repeat;}
     .ph-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(30,64,175,0.92),rgba(8,145,178,0.85));}
@@ -34,16 +28,8 @@
     .ph-stat .ps-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;}
     .ph-stat .ps-lbl{font-size:10px;opacity:0.8;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
 
-    /* Search + filters bar */
-    .controls-bar{
-      display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;
-    }
-    .search-wrap{
-      flex:1;min-width:200px;
-      background:white;border:1.5px solid var(--border);border-radius:12px;
-      padding:0 14px;display:flex;align-items:center;gap:10px;
-      box-shadow:var(--shadow-xs);
-    }
+    .controls-bar{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+    .search-wrap{flex:1;min-width:200px;background:white;border:1.5px solid var(--border);border-radius:12px;padding:0 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-xs);}
     .search-wrap input{flex:1;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--text);background:transparent;padding:13px 0;}
     .search-wrap input::placeholder{color:var(--text-muted);}
     .search-icon{font-size:16px;color:var(--text-muted);}
@@ -55,40 +41,29 @@
     .chip.med-chip.active{background:var(--amber-500);border-color:var(--amber-500);}
     .chip.high-chip.active{background:var(--red-600);border-color:var(--red-600);}
 
-    /* Hospital grid – desktop 2 col */
     .hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
     @media(max-width:900px){.hosp-grid{grid-template-columns:1fr;}}
-
-    .hosp-card{
-      background:white;border:1px solid var(--border);border-radius:20px;
-      overflow:hidden;cursor:pointer;transition:all var(--t);
-      box-shadow:var(--shadow-xs);animation:fade-up 0.35s ease both;
-    }
+    .hosp-card{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all var(--t);box-shadow:var(--shadow-xs);animation:fade-up 0.35s ease both;}
     .hosp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--primary-border);}
     .hosp-card-top{height:100px;position:relative;overflow:hidden;}
     .hct-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80') center/cover no-repeat;}
     .hct-overlay{position:absolute;inset:0;}
-    .hct-overlay.low   {background:linear-gradient(135deg,rgba(5,150,105,0.85),rgba(6,182,212,0.75));}
+    .hct-overlay.low{background:linear-gradient(135deg,rgba(5,150,105,0.85),rgba(6,182,212,0.75));}
     .hct-overlay.medium{background:linear-gradient(135deg,rgba(217,119,6,0.85),rgba(245,158,11,0.75));}
-    .hct-overlay.high  {background:linear-gradient(135deg,rgba(185,28,28,0.88),rgba(220,38,38,0.78));}
+    .hct-overlay.high{background:linear-gradient(135deg,rgba(185,28,28,0.88),rgba(220,38,38,0.78));}
     .hct-badge{position:absolute;top:14px;right:14px;}
     .hct-name{position:absolute;bottom:14px;left:16px;right:16px;color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;}
     .hosp-card-body{padding:16px;}
     .hosp-addr{font-size:12px;color:var(--text-3);margin-bottom:4px;}
     .hosp-phone{font-size:11px;color:var(--primary);font-weight:700;margin-bottom:10px;}
-    .hosp-meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+    .hosp-meta{display:flex;justify-content:flex-start;align-items:center;margin-top:6px;}
     .hosp-wait{font-size:12px;color:var(--text-3);font-weight:500;}
-    .hosp-best{font-size:12px;color:var(--green-600);font-weight:700;}
     .hosp-updated{font-size:10px;color:var(--text-muted);margin-top:6px;}
 
-    /* Modal */
+    /* ── Modal ── */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(12,20,66,0.55);z-index:800;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;}
     .modal-overlay.open{display:flex;}
-    .modal{
-      background:white;border-radius:24px;width:100%;max-width:560px;max-height:90vh;
-      overflow-y:auto;animation:modal-pop 0.38s cubic-bezier(.22,1,.36,1);
-      box-shadow:0 40px 120px rgba(37,99,235,0.25);
-    }
+    .modal{background:white;border-radius:24px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;animation:modal-pop 0.38s cubic-bezier(.22,1,.36,1);box-shadow:0 40px 120px rgba(37,99,235,0.25);}
     @keyframes modal-pop{from{opacity:0;transform:scale(0.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
     .modal-hero{height:160px;position:relative;overflow:hidden;border-radius:24px 24px 0 0;}
     .mh-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=800&q=80') center/cover no-repeat;}
@@ -98,23 +73,22 @@
     .modal-addr{font-size:13px;opacity:0.88;margin-top:3px;}
     .modal-close{position:absolute;top:14px;right:14px;z-index:2;width:32px;height:32px;background:rgba(255,255,255,0.2);border:none;border-radius:50%;color:white;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
     .modal-body{padding:22px;}
-    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;}
+    @media(max-width:480px){.info-grid{grid-template-columns:1fr 1fr;}}
     .info-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;}
     .ib-label{font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
     .ib-val{font-size:15px;font-weight:800;color:var(--text);margin-top:5px;}
-    .modal-section{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+    .modal-section{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin:20px 0 12px;display:flex;align-items:center;gap:8px;}
     .modal-section::before{content:'';width:14px;height:2px;background:var(--primary);border-radius:99px;}
-    .hourly-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px;}
-    @media(max-width:480px){.hourly-grid{grid-template-columns:repeat(4,1fr);}}
-    .hr-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;}
-    .hr-label{font-size:10px;color:var(--text-3);font-weight:700;}
-    .hr-dot{width:26px;height:26px;border-radius:50%;margin:5px auto;}
-    .hr-dot.low{background:var(--low-bg);border:2px solid var(--low);}
-    .hr-dot.medium{background:var(--medium-bg);border:2px solid var(--medium);}
-    .hr-dot.high{background:var(--high-bg);border:2px solid var(--high);}
-    .legend{display:flex;gap:16px;margin:10px 0 18px;font-size:11px;color:var(--text-3);}
-    .legend-item{display:flex;align-items:center;gap:5px;}
-    .legend-dot{width:8px;height:8px;border-radius:50%;}
+
+    /* ── Department status grid (patient view) ── */
+    .dept-status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+    @media(max-width:480px){.dept-status-grid{grid-template-columns:1fr;}}
+    .dept-status-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .dsc-name{font-size:12px;font-weight:700;color:var(--text-2);flex:1;min-width:80px;}
+    .dsc-wait{font-size:11px;color:var(--text-muted);white-space:nowrap;}
+    .dept-no-data{grid-column:1/-1;text-align:center;padding:14px;font-size:12px;color:var(--text-muted);background:var(--bg);border-radius:10px;border:1px dashed var(--border);}
+
     .call-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--blue-600),var(--teal-600));color:white;border:none;border-radius:12px;font-family:var(--font);font-weight:800;font-size:15px;cursor:pointer;transition:all var(--t);box-shadow:var(--shadow-blue);}
     .call-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,99,235,0.40);}
   </style>
@@ -175,22 +149,23 @@
           <div class="modal-name" id="mName"></div>
           <div class="modal-addr" id="mAddr"></div>
         </div>
-        <button class="modal-close" onclick="document.getElementById('modalOverlay').classList.remove('open')">✕</button>
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
       </div>
       <div class="modal-body">
+
+        <!-- Overall info boxes -->
         <div class="info-grid">
           <div class="info-box"><div class="ib-label">Crowd Level</div><div class="ib-val" id="mCrowd"></div></div>
           <div class="info-box"><div class="ib-label">Wait Time</div><div class="ib-val" id="mWait"></div></div>
-          <div class="info-box"><div class="ib-label">Best Time to Visit</div><div class="ib-val" id="mBest"></div></div>
           <div class="info-box"><div class="ib-label">Last Updated</div><div class="ib-val" id="mUpdated" style="font-size:12px;"></div></div>
         </div>
-        <div class="modal-section">Hourly Prediction (AI-based)</div>
-        <div class="hourly-grid" id="mHourlyGrid"></div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--low);"></div>Low</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--medium);"></div>Medium</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--high);"></div>High</div>
+
+        <!-- Department status -->
+        <div class="modal-section">Department Status</div>
+        <div class="dept-status-grid" id="mDeptGrid">
+          <div class="dept-no-data">Loading departments...</div>
         </div>
+
         <button class="call-btn" id="mCallBtn">📞 Call Hospital</button>
       </div>
     </div>
@@ -203,14 +178,44 @@
   <script src="js/auth.js"></script>
   <script src="js/navbar.js"></script>
   <script>
-    const HOURS=["8AM","9AM","10AM","11AM","12PM","1PM","2PM","3PM","4PM","5PM","6PM"];
-    function listenToHospitals(cb){return db.collection("hospitals").onSnapshot(s=>{cb(s.docs.map(d=>({id:d.id,...d.data()})))});}
-    function formatTimestamp(ts){if(!ts)return"Never";const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);if(diff<60)return"Just now";if(diff<3600)return Math.floor(diff/60)+" min ago";if(diff<86400)return Math.floor(diff/3600)+" hr ago";return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});}
-    function getHourlyPattern(c){return HOURS.map((_,i)=>{const h=8+i;if(c==="high")return(h>=9&&h<=13)?"high":(h>=14&&h<=16)?"medium":"low";if(c==="medium")return(h>=10&&h<=12)?"medium":(h>=13&&h<=15)?"high":"low";return(h>=11&&h<=13)?"medium":"low";});}
-    function getBestTime(c){const p=getHourlyPattern(c);const i=p.indexOf("low");return i!==-1?HOURS[i]:"Evening";}
-    function waitTime(c){return{low:"~5 min",medium:"~20 min",high:"~45+ min"}[c]||"Unknown";}
+    const DEPT_LABELS = {
+      "cardiology":   "Cardiology",
+      "orthopaedics": "Orthopaedics",
+      "general-opd":  "General OPD",
+      "gynaecology":  "Gynaecology",
+      "paediatrics":  "Paediatrics",
+      "dermatology":  "Dermatology",
+      "emergency":    "Emergency / Casualty"
+    };
+
+    // Ordered list so departments always appear in the same order
+    const DEPT_ORDER = ["cardiology","orthopaedics","general-opd","gynaecology","paediatrics","dermatology","emergency"];
+
+    function listenToHospitals(cb){
+      return db.collection("hospitals").onSnapshot(s=>{
+        cb(s.docs.map(d=>({id:d.id,...d.data()})));
+      });
+    }
+
+    function formatTimestamp(ts){
+      if(!ts)return"Never";
+      const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
+      if(diff<60)return"Just now";
+      if(diff<3600)return Math.floor(diff/60)+" min ago";
+      if(diff<86400)return Math.floor(diff/3600)+" hr ago";
+      return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+    }
+
+    function waitTime(c){
+      return{low:"~5 min",medium:"~20 min",high:"~45+ min"}[c]||"Unknown";
+    }
+
     injectNavbar("hospital");
-    let allHospitals=[];let activeFilter="all";
+
+    let allHospitals=[];
+    let activeFilter="all";
+    let currentDeptUnsub=null;   // track real-time dept listener
+
     auth.onAuthStateChanged(async(user)=>{
       if(!user)return;
       document.getElementById("loadingScreen").style.display="none";
@@ -225,18 +230,30 @@
         applyFilters();
       });
     });
-    function setFilter(f,btn){activeFilter=f;document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));btn.classList.add("active");applyFilters();}
+
+    function setFilter(f,btn){
+      activeFilter=f;
+      document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+      btn.classList.add("active");
+      applyFilters();
+    }
+
     function applyFilters(){
       const q=document.getElementById("searchInput").value.toLowerCase();
       let f=allHospitals;
       if(activeFilter!=="all")f=f.filter(h=>h.crowd===activeFilter);
       if(q)f=f.filter(h=>h.name.toLowerCase().includes(q)||h.address.toLowerCase().includes(q));
-      document.getElementById("listLabel").textContent=f.length+(activeFilter==="all"?" Hospitals":` ${activeFilter.charAt(0).toUpperCase()+activeFilter.slice(1)} Crowd Hospitals`);
+      document.getElementById("listLabel").textContent=
+        f.length+(activeFilter==="all"?" Hospitals":` ${activeFilter.charAt(0).toUpperCase()+activeFilter.slice(1)} Crowd Hospitals`);
       renderHospitals(f);
     }
+
     function renderHospitals(list){
       const c=document.getElementById("hospitalList");
-      if(!list.length){c.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><p>No hospitals found.<br/>Try a different filter or search.</p></div>`;return;}
+      if(!list.length){
+        c.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><p>No hospitals found.<br/>Try a different filter or search.</p></div>`;
+        return;
+      }
       c.innerHTML=list.map(h=>`
         <div class="hosp-card" onclick="openModal('${h.id}')">
           <div class="hosp-card-top">
@@ -251,26 +268,65 @@
             <div class="crowd-bar-bg"><div class="crowd-bar-fill ${h.crowd}"></div></div>
             <div class="hosp-meta">
               <span class="hosp-wait">⏱ ${waitTime(h.crowd)} wait</span>
-              <span class="hosp-best">✅ Best: ${getBestTime(h.crowd)}</span>
             </div>
             <div class="hosp-updated">🕐 Updated ${formatTimestamp(h.lastUpdated)} · by ${h.updatedBy||"System"}</div>
           </div>
         </div>`).join("");
     }
+
+    /* ── Modal open ── */
     function openModal(id){
-      const h=allHospitals.find(h=>h.id===id);if(!h)return;
+      const h=allHospitals.find(h=>h.id===id);
+      if(!h)return;
+
+      document.getElementById("modalOverlay").classList.add("open");
+
+      // Populate static fields
       document.getElementById("mName").textContent=h.name;
       document.getElementById("mAddr").textContent="📍 "+h.address;
       document.getElementById("mCrowd").innerHTML=`<span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>`;
       document.getElementById("mWait").textContent=waitTime(h.crowd);
-      document.getElementById("mBest").textContent=getBestTime(h.crowd);
       document.getElementById("mUpdated").textContent=formatTimestamp(h.lastUpdated);
-      const pattern=getHourlyPattern(h.crowd);
-      document.getElementById("mHourlyGrid").innerHTML=pattern.map((l,i)=>`<div class="hr-box"><div class="hr-label">${HOURS[i]}</div><div class="hr-dot ${l}"></div></div>`).join("");
+
+      // Call button
       document.getElementById("mCallBtn").onclick=()=>window.location.href=`tel:${h.phone||""}`;
-      document.getElementById("modalOverlay").classList.add("open");
+
+      // ── Department listener (real-time) ──
+      if(currentDeptUnsub){ currentDeptUnsub(); currentDeptUnsub=null; }
+      document.getElementById("mDeptGrid").innerHTML=`<div class="dept-no-data">Loading departments...</div>`;
+
+      currentDeptUnsub=db.collection("hospitals").doc(id)
+        .collection("departments")
+        .onSnapshot(snap=>{
+          const depts=snap.docs.map(d=>({id:d.id,...d.data()}));
+          renderDeptGrid(depts);
+        });
     }
-    function closeModal(e){if(e.target===document.getElementById("modalOverlay"))document.getElementById("modalOverlay").classList.remove("open");}
+
+    function renderDeptGrid(depts){
+      const grid=document.getElementById("mDeptGrid");
+      if(!depts.length){
+        grid.innerHTML=`<div class="dept-no-data">No department data available yet.</div>`;
+        return;
+      }
+      const byId={};
+      depts.forEach(d=>byId[d.id]=d);
+      const ordered=DEPT_ORDER.filter(id=>byId[id]).map(id=>byId[id]);
+      grid.innerHTML=ordered.map(d=>`
+        <div class="dept-status-card">
+          <span class="dsc-name">${DEPT_LABELS[d.id]||d.id}</span>
+          <span class="badge ${d.crowd}">${(d.crowd||"").toUpperCase()}</span>
+          <span class="dsc-wait">${waitTime(d.crowd)}</span>
+        </div>`).join("");
+    }
+
+    function closeModal(e){
+      if(e.target.id==="modalOverlay")closeModalBtn();
+    }
+    function closeModalBtn(){
+      document.getElementById("modalOverlay").classList.remove("open");
+      if(currentDeptUnsub){ currentDeptUnsub(); currentDeptUnsub=null; }
+    }
   </script>
 </body>
 </html>
