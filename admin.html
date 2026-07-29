@@ -17,10 +17,7 @@
     @media(max-width:768px){.admin-cover{margin:-20px -16px 24px;min-height:200px;}}
     .ac-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=85') center/cover no-repeat;}
     .ac-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(109,40,217,0.92),rgba(30,64,175,0.86));}
-    .ac-content{
-      position:relative;z-index:1;padding:56px 60px;color:white;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:260px;
-    }
+    .ac-content{position:relative;z-index:1;padding:56px 60px;color:white;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:260px;}
     @media(max-width:768px){.ac-content{padding:36px 20px;min-height:200px;flex-direction:column;align-items:flex-start;}}
     .ac-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);padding:6px 14px;border-radius:var(--r-full);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
     .ac-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:38px;font-weight:900;letter-spacing:-0.02em;margin-bottom:8px;}
@@ -32,7 +29,6 @@
     .ac-stat .asv{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;}
     .ac-stat .asl{font-size:10px;opacity:0.82;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
 
-    /* Stats strip */
     .admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
     @media(max-width:600px){.admin-stats{grid-template-columns:1fr 1fr;}}
     .as-card{background:white;border:1px solid var(--border);border-radius:18px;padding:20px 16px;text-align:center;box-shadow:var(--shadow-xs);transition:all var(--t);position:relative;overflow:hidden;}
@@ -45,7 +41,6 @@
     .as-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;color:var(--text);}
     .as-lbl{font-size:10px;color:var(--text-3);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;}
 
-    /* Info banner */
     .info-banner{border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative;min-height:130px;}
     .ib-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=1200&q=80') center/cover no-repeat;}
     .ib-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,145,178,0.92),rgba(5,150,105,0.85));}
@@ -55,17 +50,16 @@
     .ib-text h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:900;margin-bottom:5px;}
     .ib-text p{font-size:13px;opacity:0.90;line-height:1.6;}
 
-    /* Tabs */
     .tab-bar{display:flex;background:white;border:1px solid var(--border);border-radius:14px;padding:5px;margin-bottom:24px;gap:5px;box-shadow:var(--shadow-xs);}
     .tab-btn{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;color:var(--text-3);cursor:pointer;transition:all var(--t);}
     .tab-btn:hover{background:var(--blue-50);color:var(--primary);}
     .tab-btn.active{background:linear-gradient(135deg,var(--purple-600),var(--blue-600));color:white;box-shadow:var(--shadow-blue);}
-    .tab-content{display:none;} .tab-content.active{display:block;animation:fade-up 0.3s ease;}
+    .tab-content{display:none;}.tab-content.active{display:block;animation:fade-up 0.3s ease;}
 
-    /* Desktop hospitals grid */
     .hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
     @media(max-width:900px){.hosp-grid{grid-template-columns:1fr;}}
 
+    /* Hospital management card */
     .hmc{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-xs);transition:box-shadow var(--t);animation:fade-up 0.35s ease both;}
     .hmc:hover{box-shadow:var(--shadow-md);}
     .hmc-header{height:80px;position:relative;overflow:hidden;}
@@ -79,6 +73,8 @@
     .hmc-body{padding:16px;}
     .hmc-addr{font-size:12px;color:var(--text-3);margin-bottom:4px;}
     .hmc-ts{font-size:10.5px;color:var(--text-muted);margin-bottom:12px;}
+
+    /* Overall level buttons */
     .level-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
     .lvl-btn{padding:11px 6px;border:1.5px solid var(--border);background:white;border-radius:10px;font-family:var(--font);font-size:12px;font-weight:800;cursor:pointer;transition:all var(--t);color:var(--text-3);}
     .lvl-btn:hover{border-color:var(--primary-border);background:var(--blue-50);}
@@ -88,11 +84,50 @@
     .save-tick{display:none;font-size:12px;font-weight:700;color:var(--green-700);padding:8px 0 0;text-align:center;}
     .save-tick.show{display:block;animation:fade-up 0.3s ease;}
 
+    /* ── Department toggle button ── */
+    .dept-toggle-btn{
+      width:100%;margin-top:12px;padding:9px 14px;
+      border:1.5px dashed var(--border-2);background:var(--bg);
+      border-radius:var(--r-sm);font-size:12px;font-weight:700;
+      color:var(--text-3);cursor:pointer;transition:all var(--t);
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--font);
+    }
+    .dept-toggle-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--blue-50);}
+
+    /* ── Department admin section ── */
+    .dept-admin-section{
+      display:none;margin-top:10px;
+      border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;
+    }
+    .dept-admin-section.open{display:block;animation:fade-up 0.25s ease;}
+
+    .dept-admin-row{
+      display:flex;align-items:center;gap:8px;padding:8px 12px;
+      border-bottom:1px solid var(--border);flex-wrap:wrap;
+    }
+    .dept-admin-row:last-child{border-bottom:none;}
+    .dept-admin-name{font-size:12px;font-weight:700;color:var(--text-2);min-width:120px;flex-shrink:0;}
+
+    .dept-admin-btns{display:flex;gap:5px;flex:1;}
+    .dept-lvl-btn{
+      flex:1;padding:5px 4px;border:1.5px solid var(--border);background:white;
+      border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;
+      transition:all 0.15s;color:var(--text-3);font-family:var(--font);white-space:nowrap;
+    }
+    .dept-lvl-btn:hover{border-color:var(--primary-border);}
+    .dept-lvl-btn.d-active-low   {background:var(--low-bg);   color:var(--green-600);border-color:var(--low-border);}
+    .dept-lvl-btn.d-active-medium{background:var(--medium-bg);color:#92400e;         border-color:var(--medium-border);}
+    .dept-lvl-btn.d-active-high  {background:var(--high-bg);  color:var(--red-600);  border-color:var(--high-border);}
+
+    .dept-save-tick{font-size:13px;display:none;flex-shrink:0;}
+    .dept-save-tick.show{display:inline;animation:fade-up 0.2s ease;}
+
     /* Log */
     .log-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
     .log-item:last-child{border-bottom:none;}
     .log-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0;}
-    .log-dot.low{background:var(--low);} .log-dot.medium{background:var(--medium);} .log-dot.high{background:var(--high);}
+    .log-dot.low{background:var(--low);}.log-dot.medium{background:var(--medium);}.log-dot.high{background:var(--high);}
     .log-txt{flex:1;color:var(--text-2);font-size:13.5px;line-height:1.5;}
     .log-time{color:var(--text-muted);font-size:11px;white-space:nowrap;}
 
@@ -118,7 +153,7 @@
         <div>
           <div class="ac-badge">🔐 Restricted Access</div>
           <div class="ac-title">Hospital Dashboard</div>
-          <div class="ac-sub">Manage crowd levels · Monitor activity · View user messages</div>
+          <div class="ac-sub">Manage crowd levels · Update departments · Monitor activity</div>
         </div>
         <div class="ac-right">
           <div class="ac-stat"><div class="asv" id="acTotal">–</div><div class="asl">Hospitals</div></div>
@@ -128,26 +163,23 @@
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="admin-stats stagger">
       <div class="as-card c-total"><div class="as-icon">🏥</div><div class="as-val" id="aTotal">–</div><div class="as-lbl">Total Hospitals</div></div>
       <div class="as-card c-low"><div class="as-icon">🟢</div><div class="as-val" id="aLow">–</div><div class="as-lbl">Low Crowd</div></div>
       <div class="as-card c-high"><div class="as-icon">🔴</div><div class="as-val" id="aHigh">–</div><div class="as-lbl">High Crowd</div></div>
     </div>
 
-    <!-- Info banner -->
     <div class="info-banner">
       <div class="ib-img"></div><div class="ib-overlay"></div>
       <div class="ib-content">
         <div class="ib-icon">💡</div>
         <div class="ib-text">
           <h3>How to Update Crowd Levels</h3>
-          <p>Click Low, Medium, or High on any hospital card below to instantly update the crowd status for all users in real-time. Changes reflect immediately across the app.</p>
+          <p>Set the overall hospital crowd level using Low / Medium / High. Then expand <strong>Manage Departments</strong> to update individual departments like Cardiology, Orthopaedics, and more. All changes reflect instantly for patients.</p>
         </div>
       </div>
     </div>
 
-    <!-- Tabs -->
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('hospitals',this)">🏥 Hospitals</button>
       <button class="tab-btn"        onclick="switchTab('log',this)">📋 Activity Log</button>
@@ -190,33 +222,93 @@
   <script src="js/auth.js"></script>
   <script src="js/navbar.js"></script>
   <script>
+
+    /* ── Departments config ── */
+    const DEPARTMENTS = [
+      { id: "cardiology",   name: "Cardiology" },
+      { id: "orthopaedics", name: "Orthopaedics" },
+      { id: "general-opd",  name: "General OPD" },
+      { id: "gynaecology",  name: "Gynaecology" },
+      { id: "paediatrics",  name: "Paediatrics" },
+      { id: "dermatology",  name: "Dermatology" },
+      { id: "emergency",    name: "Emergency / Casualty" },
+    ];
+
+    const WAIT_MINS = { low: 5, medium: 20, high: 45 };
+
+    /* ── Helpers ── */
+    function listenToHospitals(cb){
+      return db.collection("hospitals").onSnapshot(s=>{
+        cb(s.docs.map(d=>({id:d.id,...d.data()})));
+      });
+    }
+
+    async function updateCrowdLevel(id,crowd,email){
+      await db.collection("hospitals").doc(id).update({
+        crowd,
+        lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedBy: email
+      });
+    }
+
+    function formatTimestamp(ts){
+      if(!ts)return"Never";
+      const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
+      if(diff<60)return"Just now";
+      if(diff<3600)return Math.floor(diff/60)+" min ago";
+      return Math.floor(diff/3600)+" hr ago";
+    }
+
+    /* ── Build department rows HTML ── */
+    function deptSectionHTML(hospitalId){
+      return DEPARTMENTS.map(d=>`
+        <div class="dept-admin-row">
+          <span class="dept-admin-name">${d.name}</span>
+          <div class="dept-admin-btns">
+            <button class="dept-lvl-btn" id="dbtn-${hospitalId}-${d.id}-low"
+              onclick="setDeptLevel('${hospitalId}','${d.id}','low','${d.name}')">🟢 Low</button>
+            <button class="dept-lvl-btn" id="dbtn-${hospitalId}-${d.id}-medium"
+              onclick="setDeptLevel('${hospitalId}','${d.id}','medium','${d.name}')">🟡 Med</button>
+            <button class="dept-lvl-btn" id="dbtn-${hospitalId}-${d.id}-high"
+              onclick="setDeptLevel('${hospitalId}','${d.id}','high','${d.name}')">🔴 High</button>
+          </div>
+          <span class="dept-save-tick" id="dtick-${hospitalId}-${d.id}">✅</span>
+        </div>`).join("");
+    }
+
     injectNavbar("admin");
-    function listenToHospitals(cb){return db.collection("hospitals").onSnapshot(s=>{cb(s.docs.map(d=>({id:d.id,...d.data()})))});}
-    async function updateCrowdLevel(id,crowd,email){await db.collection("hospitals").doc(id).update({crowd,lastUpdated:firebase.firestore.FieldValue.serverTimestamp(),updatedBy:email});}
-    function formatTimestamp(ts){if(!ts)return"Never";const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);if(diff<60)return"Just now";if(diff<3600)return Math.floor(diff/60)+" min ago";return Math.floor(diff/3600)+" hr ago";}
-    let activityLog=[];
+    let activityLog = [];
 
     auth.onAuthStateChanged(async(user)=>{
       if(!user)return;
       if(!ADMIN_EMAILS.includes(user.email)){
-        document.getElementById("loadingScreen").innerHTML=`<div style="text-align:center;"><div style="font-size:56px;margin-bottom:16px;">⛔</div><p style="color:var(--red-600);font-weight:800;font-size:18px;">Access Denied</p><p style="color:var(--text-3);font-size:14px;margin:10px 0;">You are not authorised as an admin.</p><a href="home.html" style="color:var(--primary);font-size:14px;font-weight:700;">← Back to Home</a></div>`;
+        document.getElementById("loadingScreen").innerHTML=`
+          <div style="text-align:center;">
+            <div style="font-size:56px;margin-bottom:16px;">⛔</div>
+            <p style="color:var(--red-600);font-weight:800;font-size:18px;">Access Denied</p>
+            <p style="color:var(--text-3);font-size:14px;margin:10px 0;">You are not authorised as an admin.</p>
+            <a href="home.html" style="color:var(--primary);font-size:14px;font-weight:700;">← Back to Home</a>
+          </div>`;
         return;
       }
       document.getElementById("loadingScreen").style.display="none";
       document.getElementById("mainContent").style.display="block";
+
       listenToHospitals(hospitals=>{
-        renderAdminCards(hospitals,user.email);
-        const low=hospitals.filter(h=>h.crowd==="low").length;
-        const high=hospitals.filter(h=>h.crowd==="high").length;
+        renderAdminCards(hospitals, user.email);
+        const low  = hospitals.filter(h=>h.crowd==="low").length;
+        const high = hospitals.filter(h=>h.crowd==="high").length;
         ["aTotal","acTotal"].forEach(id=>document.getElementById(id).textContent=hospitals.length);
         ["aLow","acLow"].forEach(id=>document.getElementById(id).textContent=low);
         ["aHigh","acHigh"].forEach(id=>document.getElementById(id).textContent=high);
       });
+
       loadMessages();
     });
 
-    function renderAdminCards(hospitals,adminEmail){
-      document.getElementById("adminHospList").innerHTML=hospitals.map(h=>`
+    /* ── Render hospital cards ── */
+    function renderAdminCards(hospitals, adminEmail){
+      document.getElementById("adminHospList").innerHTML = hospitals.map(h=>`
         <div class="hmc">
           <div class="hmc-header">
             <div class="hmc-himg"></div>
@@ -229,61 +321,149 @@
           <div class="hmc-body">
             <div class="hmc-addr">📍 ${h.address}</div>
             <div class="hmc-ts">🕐 Updated: ${formatTimestamp(h.lastUpdated)} · by ${h.updatedBy||"System"}</div>
+
+            <!-- Overall crowd level -->
+            <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Overall Hospital Crowd</div>
             <div class="level-row">
-              <button class="lvl-btn ${h.crowd==="low"?"active-low":""}"    onclick="setLevel('${h.id}','low','${h.name}')">🟢 Low</button>
-              <button class="lvl-btn ${h.crowd==="medium"?"active-medium":""}" onclick="setLevel('${h.id}','medium','${h.name}')">🟡 Medium</button>
-              <button class="lvl-btn ${h.crowd==="high"?"active-high":""}"  onclick="setLevel('${h.id}','high','${h.name}')">🔴 High</button>
+              <button class="lvl-btn ${h.crowd==="low"?"active-low":""}"
+                onclick="setLevel('${h.id}','low','${h.name}')">🟢 Low</button>
+              <button class="lvl-btn ${h.crowd==="medium"?"active-medium":""}"
+                onclick="setLevel('${h.id}','medium','${h.name}')">🟡 Medium</button>
+              <button class="lvl-btn ${h.crowd==="high"?"active-high":""}"
+                onclick="setLevel('${h.id}','high','${h.name}')">🔴 High</button>
             </div>
-            <div class="save-tick" id="tick-${h.id}">✅ Crowd level updated successfully!</div>
+            <div class="save-tick" id="tick-${h.id}">✅ Hospital crowd level updated!</div>
+
+            <!-- Department toggle -->
+            <button class="dept-toggle-btn" onclick="toggleDepts('${h.id}')">
+              🏥 Manage Departments
+              <span id="darrow-${h.id}">▼</span>
+            </button>
+            <div class="dept-admin-section" id="depts-${h.id}">
+              ${deptSectionHTML(h.id)}
+            </div>
+
           </div>
         </div>`).join("");
     }
 
-    async function setLevel(id,level,name){
-      const user=auth.currentUser;if(!user)return;
-      try{
-        await updateCrowdLevel(id,level,user.email);
-        const tick=document.getElementById("tick-"+id);
-        if(tick){tick.classList.add("show");setTimeout(()=>tick.classList.remove("show"),2500);}
-        activityLog.unshift({hospital:name,level,by:user.email,time:new Date()});
-        if(activityLog.length>20)activityLog.pop();
-      }catch(err){alert("Update failed: "+err.message);}
+    /* ── Toggle department section ── */
+    function toggleDepts(hospitalId){
+      const sec   = document.getElementById("depts-"  + hospitalId);
+      const arrow = document.getElementById("darrow-" + hospitalId);
+      const isOpen = sec.classList.contains("open");
+      sec.classList.toggle("open", !isOpen);
+      arrow.textContent = isOpen ? "▼" : "▲";
+      if(!isOpen) loadDeptStates(hospitalId);
     }
 
+    /* ── Load current dept states from Firestore ── */
+    async function loadDeptStates(hospitalId){
+      try{
+        const snap = await db.collection("hospitals").doc(hospitalId)
+          .collection("departments").get();
+        snap.docs.forEach(doc=>{
+          if(doc.data().crowd) updateDeptButtons(hospitalId, doc.id, doc.data().crowd);
+        });
+      }catch(e){ console.warn("Could not load dept states:", e); }
+    }
+
+    /* ── Set overall hospital crowd ── */
+    async function setLevel(id, level, name){
+      const user = auth.currentUser; if(!user) return;
+      try{
+        await updateCrowdLevel(id, level, user.email);
+        const tick = document.getElementById("tick-" + id);
+        if(tick){ tick.classList.add("show"); setTimeout(()=>tick.classList.remove("show"), 2500); }
+        activityLog.unshift({ hospital: name, level, by: user.email, time: new Date(), type: "overall" });
+        if(activityLog.length > 30) activityLog.pop();
+      }catch(err){ alert("Update failed: " + err.message); }
+    }
+
+    /* ── Set department crowd ── */
+    async function setDeptLevel(hospitalId, deptId, level, deptName){
+      const user = auth.currentUser; if(!user) return;
+      try{
+        await db.collection("hospitals").doc(hospitalId)
+          .collection("departments").doc(deptId)
+          .set({
+            name:        deptName,
+            crowd:       level,
+            waitMinutes: WAIT_MINS[level],
+            lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy:   user.email
+          }, { merge: true });
+
+        updateDeptButtons(hospitalId, deptId, level);
+
+        const tick = document.getElementById("dtick-" + hospitalId + "-" + deptId);
+        if(tick){ tick.classList.add("show"); setTimeout(()=>tick.classList.remove("show"), 2000); }
+
+        activityLog.unshift({ hospital: deptName + " — " + hospitalId, level, by: user.email, time: new Date(), type: "dept" });
+        if(activityLog.length > 30) activityLog.pop();
+
+      }catch(err){ alert("Department update failed: " + err.message); }
+    }
+
+    /* ── Highlight active dept button ── */
+    function updateDeptButtons(hospitalId, deptId, level){
+      ["low","medium","high"].forEach(l=>{
+        const btn = document.getElementById("dbtn-" + hospitalId + "-" + deptId + "-" + l);
+        if(btn) btn.className = "dept-lvl-btn" + (l === level ? " d-active-" + l : "");
+      });
+    }
+
+    /* ── Activity log ── */
     function renderLog(){
-      const el=document.getElementById("activityLog");
-      if(!activityLog.length){el.innerHTML=`<div style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px;">No updates yet in this session.</div>`;return;}
-      el.innerHTML=activityLog.map(e=>`
+      const el = document.getElementById("activityLog");
+      if(!activityLog.length){
+        el.innerHTML=`<div style="color:var(--text-muted);font-size:13px;text-align:center;padding:20px;">No updates yet in this session.</div>`;
+        return;
+      }
+      el.innerHTML = activityLog.map(e=>`
         <div class="log-item">
           <div class="log-dot ${e.level}"></div>
-          <div class="log-txt"><strong>${e.hospital}</strong> marked as <strong>${e.level.toUpperCase()}</strong><br/><span style="color:var(--text-3);font-size:12px;">by ${e.by}</span></div>
+          <div class="log-txt">
+            <strong>${e.hospital}</strong> marked as <strong>${e.level.toUpperCase()}</strong>
+            ${e.type==="dept"?'<span style="font-size:11px;color:var(--primary);"> (dept)</span>':''}
+            <br/><span style="color:var(--text-3);font-size:12px;">by ${e.by}</span>
+          </div>
           <div class="log-time">${e.time.toLocaleTimeString()}</div>
         </div>`).join("");
     }
 
+    /* ── Messages ── */
     async function loadMessages(){
-      const ml=document.getElementById("messagesList");
+      const ml = document.getElementById("messagesList");
       ml.innerHTML=`<div style="grid-column:1/-1;color:var(--text-muted);font-size:13px;text-align:center;padding:20px;">Loading messages...</div>`;
       try{
-        const snap=await db.collection("messages").orderBy("sentAt","desc").limit(10).get();
-        if(snap.empty){ml.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">✉️</div><p>No messages yet.</p></div>`;return;}
-        ml.innerHTML=snap.docs.map(doc=>{const m=doc.data();return`
-          <div class="msg-card">
+        const snap = await db.collection("messages").orderBy("sentAt","desc").limit(10).get();
+        if(snap.empty){
+          ml.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">✉️</div><p>No messages yet.</p></div>`;
+          return;
+        }
+        ml.innerHTML = snap.docs.map(doc=>{
+          const m = doc.data();
+          return`<div class="msg-card">
             <div class="msg-from">👤 ${m.name}</div>
             <div class="msg-topic">📌 ${m.topic}</div>
             <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">${m.email}</div>
             <div class="msg-body">${m.message}</div>
             <div class="msg-time">🕐 ${m.sentAt?m.sentAt.toDate().toLocaleString():"Just now"}</div>
-          </div>`;}).join("");
-      }catch(err){ml.innerHTML=`<p style="grid-column:1/-1;color:var(--red-600);font-size:13px;text-align:center;padding:20px;">Could not load messages: ${err.message}</p>`;}
+          </div>`;
+        }).join("");
+      }catch(err){
+        ml.innerHTML=`<p style="grid-column:1/-1;color:var(--red-600);font-size:13px;text-align:center;padding:20px;">Could not load messages: ${err.message}</p>`;
+      }
     }
 
-    function switchTab(tab,btn){
+    /* ── Tab switch ── */
+    function switchTab(tab, btn){
       document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
       document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
       btn.classList.add("active");
-      document.getElementById("tab-"+tab).classList.add("active");
-      if(tab==="log")renderLog();
+      document.getElementById("tab-" + tab).classList.add("active");
+      if(tab === "log") renderLog();
     }
   </script>
 </body>
