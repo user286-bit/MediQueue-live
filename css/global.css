@@ -545,3 +545,52 @@ input, textarea, select { font-family:var(--font); }
   position:relative; z-index:1;
   padding:28px 22px; color:white;
 }
+/* ── Notification bell button ── */
+.notify-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.18);
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  line-height: 1;
+}
+.notify-btn:hover {
+  transform: scale(1.15);
+  background: rgba(255,255,255,0.32);
+}
+.notify-btn.subscribed {
+  background: rgba(255,255,255,0.92);
+}
+
+/* ── Toast notification ── */
+.notif-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0c1442;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+.notif-toast.show {
+  transform: translateX(-50%) translateY(0);
+}
