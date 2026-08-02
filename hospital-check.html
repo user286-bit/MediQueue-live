@@ -145,7 +145,6 @@
     <div class="modal">
       <div class="modal-hero">
         <div class="mh-img"></div><div class="mh-overlay"></div>
-        <button class="notify-btn" id="mNotifyBtn" data-notify-id="" onclick="event.stopPropagation(); toggleNotify(currentModalHospitalId)" title="Notify me when crowd is low">🔔</button>
         <div class="mh-content">
           <div class="modal-name" id="mName"></div>
           <div class="modal-addr" id="mAddr"></div>
@@ -171,9 +170,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Toast for notification feedback -->
-  <div class="notif-toast" id="notifToast"></div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -219,92 +215,6 @@
     let allHospitals=[];
     let activeFilter="all";
     let currentDeptUnsub=null;   // track real-time dept listener
-    let currentModalHospitalId=null;
-
-    /* ══════════════ Browser notifications ══════════════ */
-    const NOTIFY_STORAGE_KEY = "mq_notify_subs";
-    let subscribedIds = new Set(JSON.parse(localStorage.getItem(NOTIFY_STORAGE_KEY) || "[]"));
-    let prevCrowdMap = {}; // hospitalId -> last known crowd, used to detect a drop to "low"
-
-    function saveNotifySubs(){
-      localStorage.setItem(NOTIFY_STORAGE_KEY, JSON.stringify([...subscribedIds]));
-    }
-
-    async function ensureNotifyPermission(){
-      if(!("Notification" in window)){
-        showToast("Notifications aren't supported on this browser");
-        return false;
-      }
-      if(Notification.permission === "granted") return true;
-      if(Notification.permission === "denied"){
-        showToast("Notifications are blocked — enable them in browser settings");
-        return false;
-      }
-      const perm = await Notification.requestPermission();
-      if(perm !== "granted"){
-        showToast("Notifications weren't enabled");
-        return false;
-      }
-      return true;
-    }
-
-    async function toggleNotify(id){
-      if(!id) return;
-      if(subscribedIds.has(id)){
-        subscribedIds.delete(id);
-        saveNotifySubs();
-        syncNotifyButtons(id);
-        showToast("🔕 Notifications off");
-        return;
-      }
-      const granted = await ensureNotifyPermission();
-      if(!granted) return;
-      subscribedIds.add(id);
-      saveNotifySubs();
-      syncNotifyButtons(id);
-      showToast("🔔 We'll notify you when the crowd is low");
-    }
-
-    function syncNotifyButtons(id){
-      const on = subscribedIds.has(id);
-      document.querySelectorAll(`[data-notify-id="${id}"]`).forEach(btn=>{
-        btn.classList.toggle("subscribed", on);
-      });
-    }
-
-    function showToast(msg){
-      const t = document.getElementById("notifToast");
-      t.textContent = msg;
-      t.classList.add("show");
-      clearTimeout(t._timer);
-      t._timer = setTimeout(()=>t.classList.remove("show"), 2800);
-    }
-
-    function fireLowCrowdNotification(h){
-      showToast(`🟢 ${h.name} crowd is now low`);
-      if("Notification" in window && Notification.permission === "granted"){
-        const n = new Notification("MediQueue", {
-          body: `${h.name} crowd is now low — good time to visit`,
-          tag: "mq-"+h.id
-        });
-        n.onclick = ()=>{ window.focus(); n.close(); };
-      }
-    }
-
-    // Detect crowd transitions to "low" for subscribed hospitals and fire a one-time alert
-    function checkNotifyTransitions(list){
-      list.forEach(h=>{
-        const prev = prevCrowdMap[h.id];
-        if(subscribedIds.has(h.id) && prev && prev !== "low" && h.crowd === "low"){
-          fireLowCrowdNotification(h);
-          subscribedIds.delete(h.id); // one-shot alert, then auto-unsubscribe
-          saveNotifySubs();
-          syncNotifyButtons(h.id);
-        }
-        prevCrowdMap[h.id] = h.crowd;
-      });
-    }
-    /* ═════════════════════════════════════════════════════ */
 
     auth.onAuthStateChanged(async(user)=>{
       if(!user)return;
@@ -314,7 +224,6 @@
       if(params.get("q"))document.getElementById("searchInput").value=params.get("q");
       listenToHospitals(h=>{
         allHospitals=h;
-        checkNotifyTransitions(h);
         document.getElementById("phTotal").textContent=h.length;
         document.getElementById("phLow").textContent=h.filter(x=>x.crowd==="low").length;
         document.getElementById("phHigh").textContent=h.filter(x=>x.crowd==="high").length;
@@ -350,7 +259,6 @@
           <div class="hosp-card-top">
             <div class="hct-img"></div>
             <div class="hct-overlay ${h.crowd}"></div>
-            <button class="notify-btn ${subscribedIds.has(h.id)?'subscribed':''}" data-notify-id="${h.id}" onclick="event.stopPropagation(); toggleNotify('${h.id}')" title="Notify me when crowd is low">🔔</button>
             <div class="hct-badge"><span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span></div>
             <div class="hct-name">${h.name}</div>
           </div>
@@ -368,6 +276,21 @@
 
     /* ── Modal open ── */
     function openModal(id){
+      const h=allHospitals.find(h=>h.id===id);
+      if(!h)return;
+
+      document.getElementById("modalOverlay").classList.add("open");
+
+      // Populate static fields
+      document.getElementById("mName").textContent=h.name;
+      document.getElementById("mAddr").textContent="📍 "+h.address;
+      document.getElementById("mCrowd").innerHTML=`<span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>`;
+      document.getElementById("mWait").textContent=waitTime(h.crowd);
+      document.getElementById("mUpdated").textContent=formatTimestamp(h.lastUpdated);
+
+      // Call button
+      document.getElementById("mCallBtn").onclick=()=>window.location.href=`tel:${h.phone||""}`;
+
       // ── Department listener (real-time) ──
       if(currentDeptUnsub){ currentDeptUnsub(); currentDeptUnsub=null; }
       document.getElementById("mDeptGrid").innerHTML=`<div class="dept-no-data">Loading departments...</div>`;
@@ -379,6 +302,7 @@
           renderDeptGrid(depts);
         });
     }
+
     function renderDeptGrid(depts){
       const grid=document.getElementById("mDeptGrid");
       if(!depts.length){
@@ -402,7 +326,6 @@
     function closeModalBtn(){
       document.getElementById("modalOverlay").classList.remove("open");
       if(currentDeptUnsub){ currentDeptUnsub(); currentDeptUnsub=null; }
-      currentModalHospitalId=null;
     }
   </script>
 </body>
