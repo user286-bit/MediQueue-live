@@ -208,6 +208,19 @@
 
     injectNavbar("hospital");
 
+    /* ── NEW: register service worker (required for Android/Chrome notifications) ── */
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('sw.js')
+        .catch(err=>console.warn("Service worker registration failed:", err));
+
+      // Handle taps on a notification routed back from sw.js
+      navigator.serviceWorker.addEventListener('message', (event)=>{
+        if(event.data && event.data.type === 'OPEN_HOSPITAL' && event.data.hospitalId){
+          openModal(event.data.hospitalId);
+        }
+      });
+    }
+
     /* ── State variables ── */
     let allHospitals        = [];
     let activeFilter        = "all";
@@ -215,6 +228,7 @@
     let currentUserId       = null;
     let subscribedHospitals = new Set();
     let prevCrowdMap        = new Map();
+    let pendingOpenId       = new URLSearchParams(window.location.search).get("open");
 
     /* ── Notification helpers ── */
     function showToast(msg){
@@ -232,21 +246,31 @@
       }catch(e){ console.warn("subscriptions load failed:", e); }
     }
 
-    // CHANGE 1: unique tag per notification (hospital.id + timestamp)
-    // so the browser never suppresses/replaces a prior notification for
-    // the same hospital.
-    function fireNotification(hospital){
+    /* ── UPDATED: fires via the service worker so it actually works on
+       Android/Chrome (the raw `new Notification()` constructor throws
+       "Illegal constructor" there). Wrapped in try/catch so a failure
+       here can NEVER abort the onSnapshot loop that calls it. ── */
+    async function fireNotification(hospital){
       if(Notification.permission !== "granted") return;
-      const n = new Notification("🟢 Good time to visit!", {
+      const title = "🟢 Good time to visit!";
+      const options = {
         body: hospital.name + " crowd just dropped to LOW. ~5 min wait.",
         tag:  hospital.id + "-" + Date.now(),
-      });
-      n.onclick = ()=>{ window.focus(); openModal(hospital.id); n.close(); };
+        data: { hospitalId: hospital.id }
+      };
+      try{
+        if('serviceWorker' in navigator){
+          const reg = await navigator.serviceWorker.ready;
+          await reg.showNotification(title, options);
+        } else if('Notification' in window){
+          const n = new Notification(title, options);
+          n.onclick = ()=>{ window.focus(); openModal(hospital.id); n.close(); };
+        }
+      }catch(err){
+        console.warn("Notification failed:", err);
+      }
     }
 
-    // CHANGE 2 (new helper): silently turns the bell off after it has
-    // fired once, without touching the toast/UI messaging used by the
-    // manual toggle button.
     async function unsubscribeHospital(hospitalId){
       if(!currentUserId) return;
       try{
@@ -299,8 +323,6 @@
           const curr = hospital.crowd;
           if(prev && prev !== "low" && curr === "low" && subscribedHospitals.has(hospital.id)){
             fireNotification(hospital);
-            // CHANGE 2: bell auto-turns off right after it fires.
-            // User can tap the bell again to re-subscribe via toggleSubscription().
             unsubscribeHospital(hospital.id).then(applyFilters);
           }
           prevCrowdMap.set(hospital.id, curr);
@@ -310,9 +332,14 @@
         document.getElementById("phLow").textContent   = h.filter(x=>x.crowd==="low").length;
         document.getElementById("phHigh").textContent  = h.filter(x=>x.crowd==="high").length;
         applyFilters();
+
+        // If we arrived here via a notification tap (?open=hospitalId), open it once
+        if(pendingOpenId){
+          openModal(pendingOpenId);
+          pendingOpenId = null;
+        }
       });
     });
-
     /* ── Filter functions (unchanged) ── */
     function setFilter(f,btn){
       activeFilter = f;
@@ -330,6 +357,7 @@
         f.length+(activeFilter==="all"?" Hospitals":` ${activeFilter.charAt(0).toUpperCase()+activeFilter.slice(1)} Crowd Hospitals`);
       renderHospitals(f);
     }
+
     /* ── renderHospitals — bell button added ── */
     function renderHospitals(list){
       const c = document.getElementById("hospitalList");
