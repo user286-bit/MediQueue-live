@@ -232,28 +232,13 @@
       }catch(e){ console.warn("subscriptions load failed:", e); }
     }
 
-    // CHANGE 1: unique tag per notification (hospital.id + timestamp)
-    // so the browser never suppresses/replaces a prior notification for
-    // the same hospital.
     function fireNotification(hospital){
       if(Notification.permission !== "granted") return;
       const n = new Notification("🟢 Good time to visit!", {
         body: hospital.name + " crowd just dropped to LOW. ~5 min wait.",
-        tag:  hospital.id + "-" + Date.now(),
+        tag:  hospital.id,
       });
       n.onclick = ()=>{ window.focus(); openModal(hospital.id); n.close(); };
-    }
-
-    // CHANGE 2 (new helper): silently turns the bell off after it has
-    // fired once, without touching the toast/UI messaging used by the
-    // manual toggle button.
-    async function unsubscribeHospital(hospitalId){
-      if(!currentUserId) return;
-      try{
-        await db.collection("users").doc(currentUserId)
-          .collection("subscriptions").doc(hospitalId).delete();
-      }catch(e){ console.warn("auto-unsubscribe failed:", e); }
-      subscribedHospitals.delete(hospitalId);
     }
 
     async function toggleSubscription(hospitalId, e){
@@ -299,9 +284,6 @@
           const curr = hospital.crowd;
           if(prev && prev !== "low" && curr === "low" && subscribedHospitals.has(hospital.id)){
             fireNotification(hospital);
-            // CHANGE 2: bell auto-turns off right after it fires.
-            // User can tap the bell again to re-subscribe via toggleSubscription().
-            unsubscribeHospital(hospital.id).then(applyFilters);
           }
           prevCrowdMap.set(hospital.id, curr);
         });
