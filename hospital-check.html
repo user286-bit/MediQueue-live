@@ -11,7 +11,6 @@
     body{overflow-x:hidden;}
     body::before{content:'';position:fixed;inset:0;z-index:-2;background:url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1920&q=80') center/cover no-repeat fixed;}
     body::after{content:'';position:fixed;inset:0;z-index:-1;background:rgba(240,244,255,0.95);}
-
     .page-hero{margin:-36px -40px 36px;position:relative;overflow:hidden;border-radius:0;min-height:240px;}
     @media(max-width:768px){.page-hero{margin:-20px -16px 24px;min-height:180px;}}
     .ph-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=85') center/cover no-repeat;}
@@ -27,7 +26,6 @@
     .ph-stat{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:14px;padding:16px 20px;text-align:center;min-width:100px;}
     .ph-stat .ps-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:900;}
     .ph-stat .ps-lbl{font-size:10px;opacity:0.8;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
-
     .controls-bar{display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
     .search-wrap{flex:1;min-width:200px;background:white;border:1.5px solid var(--border);border-radius:12px;padding:0 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-xs);}
     .search-wrap input{flex:1;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--text);background:transparent;padding:13px 0;}
@@ -40,7 +38,6 @@
     .chip.low-chip.active{background:var(--green-500);border-color:var(--green-500);}
     .chip.med-chip.active{background:var(--amber-500);border-color:var(--amber-500);}
     .chip.high-chip.active{background:var(--red-600);border-color:var(--red-600);}
-
     .hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
     @media(max-width:900px){.hosp-grid{grid-template-columns:1fr;}}
     .hosp-card{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all var(--t);box-shadow:var(--shadow-xs);animation:fade-up 0.35s ease both;}
@@ -52,7 +49,7 @@
     .hct-overlay.medium{background:linear-gradient(135deg,rgba(217,119,6,0.85),rgba(245,158,11,0.75));}
     .hct-overlay.high{background:linear-gradient(135deg,rgba(185,28,28,0.88),rgba(220,38,38,0.78));}
     .hct-badge{position:absolute;top:14px;right:14px;}
-    .hct-name{position:absolute;bottom:14px;left:16px;right:16px;color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;}
+    .hct-name{position:absolute;bottom:14px;left:52px;right:16px;color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;}
     .hosp-card-body{padding:16px;}
     .hosp-addr{font-size:12px;color:var(--text-3);margin-bottom:4px;}
     .hosp-phone{font-size:11px;color:var(--primary);font-weight:700;margin-bottom:10px;}
@@ -60,7 +57,16 @@
     .hosp-wait{font-size:12px;color:var(--text-3);font-weight:500;}
     .hosp-updated{font-size:10px;color:var(--text-muted);margin-top:6px;}
 
-    /* ── Modal ── */
+    /* Bell button */
+    .notify-btn{position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,0.18);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(4px);z-index:2;line-height:1;}
+    .notify-btn:hover{transform:scale(1.15);background:rgba(255,255,255,0.32);}
+    .notify-btn.subscribed{background:rgba(255,255,255,0.92);}
+
+    /* Toast */
+    .notif-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:#0c1442;color:white;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:600;z-index:9999;transition:transform 0.4s cubic-bezier(.22,1,.36,1);white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.25);pointer-events:none;}
+    .notif-toast.show{transform:translateX(-50%) translateY(0);}
+
+    /* Modal */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(12,20,66,0.55);z-index:800;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;}
     .modal-overlay.open{display:flex;}
     .modal{background:white;border-radius:24px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;animation:modal-pop 0.38s cubic-bezier(.22,1,.36,1);box-shadow:0 40px 120px rgba(37,99,235,0.25);}
@@ -80,15 +86,12 @@
     .ib-val{font-size:15px;font-weight:800;color:var(--text);margin-top:5px;}
     .modal-section{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin:20px 0 12px;display:flex;align-items:center;gap:8px;}
     .modal-section::before{content:'';width:14px;height:2px;background:var(--primary);border-radius:99px;}
-
-    /* ── Department status grid (patient view) ── */
     .dept-status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
     @media(max-width:480px){.dept-status-grid{grid-template-columns:1fr;}}
     .dept-status-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
     .dsc-name{font-size:12px;font-weight:700;color:var(--text-2);flex:1;min-width:80px;}
     .dsc-wait{font-size:11px;color:var(--text-muted);white-space:nowrap;}
     .dept-no-data{grid-column:1/-1;text-align:center;padding:14px;font-size:12px;color:var(--text-muted);background:var(--bg);border-radius:10px;border:1px dashed var(--border);}
-
     .call-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--blue-600),var(--teal-600));color:white;border:none;border-radius:12px;font-family:var(--font);font-weight:800;font-size:15px;cursor:pointer;transition:all var(--t);box-shadow:var(--shadow-blue);}
     .call-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(37,99,235,0.40);}
   </style>
@@ -140,6 +143,9 @@
   </footer>
   </div>
 
+  <!-- Toast -->
+  <div class="notif-toast" id="notifToast"></div>
+
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
     <div class="modal">
@@ -152,20 +158,15 @@
         <button class="modal-close" onclick="closeModalBtn()">✕</button>
       </div>
       <div class="modal-body">
-
-        <!-- Overall info boxes -->
         <div class="info-grid">
           <div class="info-box"><div class="ib-label">Crowd Level</div><div class="ib-val" id="mCrowd"></div></div>
           <div class="info-box"><div class="ib-label">Wait Time</div><div class="ib-val" id="mWait"></div></div>
           <div class="info-box"><div class="ib-label">Last Updated</div><div class="ib-val" id="mUpdated" style="font-size:12px;"></div></div>
         </div>
-
-        <!-- Department status -->
         <div class="modal-section">Department Status</div>
         <div class="dept-status-grid" id="mDeptGrid">
           <div class="dept-no-data">Loading departments...</div>
         </div>
-
         <button class="call-btn" id="mCallBtn">📞 Call Hospital</button>
       </div>
     </div>
@@ -178,25 +179,21 @@
   <script src="js/auth.js"></script>
   <script src="js/navbar.js"></script>
   <script>
+    /* ── Department config (unchanged) ── */
     const DEPT_LABELS = {
-      "cardiology":   "Cardiology",
-      "orthopaedics": "Orthopaedics",
-      "general-opd":  "General OPD",
-      "gynaecology":  "Gynaecology",
-      "paediatrics":  "Paediatrics",
-      "dermatology":  "Dermatology",
-      "emergency":    "Emergency / Casualty"
+      "cardiology":"Cardiology","orthopaedics":"Orthopaedics",
+      "general-opd":"General OPD","gynaecology":"Gynaecology",
+      "paediatrics":"Paediatrics","dermatology":"Dermatology",
+      "emergency":"Emergency / Casualty"
     };
-
-    // Ordered list so departments always appear in the same order
     const DEPT_ORDER = ["cardiology","orthopaedics","general-opd","gynaecology","paediatrics","dermatology","emergency"];
 
+    /* ── Unchanged helper functions ── */
     function listenToHospitals(cb){
       return db.collection("hospitals").onSnapshot(s=>{
         cb(s.docs.map(d=>({id:d.id,...d.data()})));
       });
     }
-
     function formatTimestamp(ts){
       if(!ts)return"Never";
       const d=ts.toDate?ts.toDate():new Date(ts),now=new Date(),diff=Math.floor((now-d)/1000);
@@ -205,61 +202,134 @@
       if(diff<86400)return Math.floor(diff/3600)+" hr ago";
       return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
     }
-
     function waitTime(c){
       return{low:"~5 min",medium:"~20 min",high:"~45+ min"}[c]||"Unknown";
     }
 
     injectNavbar("hospital");
 
-    let allHospitals=[];
-    let activeFilter="all";
-    let currentDeptUnsub=null;   // track real-time dept listener
+    /* ── State variables ── */
+    let allHospitals        = [];
+    let activeFilter        = "all";
+    let currentDeptUnsub    = null;
+    let currentUserId       = null;
+    let subscribedHospitals = new Set();
+    let prevCrowdMap        = new Map();
 
+    /* ── Notification helpers ── */
+    function showToast(msg){
+      const t = document.getElementById("notifToast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(()=>t.classList.remove("show"), 3000);
+    }
+
+    async function loadSubscriptions(uid){
+      try{
+        const snap = await db.collection("users").doc(uid)
+          .collection("subscriptions").get();
+        snap.docs.forEach(d => subscribedHospitals.add(d.id));
+      }catch(e){ console.warn("subscriptions load failed:", e); }
+    }
+
+    function fireNotification(hospital){
+      if(Notification.permission !== "granted") return;
+      const n = new Notification("🟢 Good time to visit!", {
+        body: hospital.name + " crowd just dropped to LOW. ~5 min wait.",
+        tag:  hospital.id,
+      });
+      n.onclick = ()=>{ window.focus(); openModal(hospital.id); n.close(); };
+    }
+
+    async function toggleSubscription(hospitalId, e){
+      e.stopPropagation();
+      if(!currentUserId) return;
+      const ref = db.collection("users").doc(currentUserId)
+        .collection("subscriptions").doc(hospitalId);
+      if(subscribedHospitals.has(hospitalId)){
+        await ref.delete();
+        subscribedHospitals.delete(hospitalId);
+        showToast("🔕 Notifications off for this hospital");
+      } else {
+        if(Notification.permission === "default"){
+          const result = await Notification.requestPermission();
+          if(result !== "granted"){
+            showToast("⚠️ Please allow notifications in browser settings");
+            return;
+          }
+        }
+        if(Notification.permission === "denied"){
+          showToast("⚠️ Notifications blocked — enable in browser settings");
+          return;
+        }
+        await ref.set({ subscribedAt: firebase.firestore.FieldValue.serverTimestamp() });
+        subscribedHospitals.add(hospitalId);
+        showToast("🔔 You'll be notified when crowd drops to Low");
+      }
+      applyFilters();
+    }
+
+    /* ── Auth (updated to support notifications) ── */
     auth.onAuthStateChanged(async(user)=>{
-      if(!user)return;
-      document.getElementById("loadingScreen").style.display="none";
-      document.getElementById("mainContent").style.display="block";
-      const params=new URLSearchParams(window.location.search);
-      if(params.get("q"))document.getElementById("searchInput").value=params.get("q");
+      if(!user) return;
+      currentUserId = user.uid;
+      document.getElementById("loadingScreen").style.display = "none";
+      document.getElementById("mainContent").style.display  = "block";
+      const params = new URLSearchParams(window.location.search);
+      if(params.get("q")) document.getElementById("searchInput").value = params.get("q");
+      await loadSubscriptions(user.uid);
       listenToHospitals(h=>{
-        allHospitals=h;
-        document.getElementById("phTotal").textContent=h.length;
-        document.getElementById("phLow").textContent=h.filter(x=>x.crowd==="low").length;
-        document.getElementById("phHigh").textContent=h.filter(x=>x.crowd==="high").length;
+        h.forEach(hospital=>{
+          const prev = prevCrowdMap.get(hospital.id);
+          const curr = hospital.crowd;
+          if(prev && prev !== "low" && curr === "low" && subscribedHospitals.has(hospital.id)){
+            fireNotification(hospital);
+          }
+          prevCrowdMap.set(hospital.id, curr);
+        });
+        allHospitals = h;
+        document.getElementById("phTotal").textContent = h.length;
+        document.getElementById("phLow").textContent   = h.filter(x=>x.crowd==="low").length;
+        document.getElementById("phHigh").textContent  = h.filter(x=>x.crowd==="high").length;
         applyFilters();
       });
     });
 
+    /* ── Filter functions (unchanged) ── */
     function setFilter(f,btn){
-      activeFilter=f;
+      activeFilter = f;
       document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
       btn.classList.add("active");
       applyFilters();
     }
 
     function applyFilters(){
-      const q=document.getElementById("searchInput").value.toLowerCase();
-      let f=allHospitals;
-      if(activeFilter!=="all")f=f.filter(h=>h.crowd===activeFilter);
-      if(q)f=f.filter(h=>h.name.toLowerCase().includes(q)||h.address.toLowerCase().includes(q));
-      document.getElementById("listLabel").textContent=
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      let f = allHospitals;
+      if(activeFilter !== "all") f = f.filter(h=>h.crowd===activeFilter);
+      if(q) f = f.filter(h=>h.name.toLowerCase().includes(q)||h.address.toLowerCase().includes(q));
+      document.getElementById("listLabel").textContent =
         f.length+(activeFilter==="all"?" Hospitals":` ${activeFilter.charAt(0).toUpperCase()+activeFilter.slice(1)} Crowd Hospitals`);
       renderHospitals(f);
     }
-
+    /* ── renderHospitals — bell button added ── */
     function renderHospitals(list){
-      const c=document.getElementById("hospitalList");
+      const c = document.getElementById("hospitalList");
       if(!list.length){
-        c.innerHTML=`<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><p>No hospitals found.<br/>Try a different filter or search.</p></div>`;
+        c.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><p>No hospitals found.<br/>Try a different filter or search.</p></div>`;
         return;
       }
-      c.innerHTML=list.map(h=>`
+      c.innerHTML = list.map(h=>`
         <div class="hosp-card" onclick="openModal('${h.id}')">
           <div class="hosp-card-top">
             <div class="hct-img"></div>
             <div class="hct-overlay ${h.crowd}"></div>
             <div class="hct-badge"><span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span></div>
+            <button class="notify-btn ${subscribedHospitals.has(h.id)?'subscribed':''}"
+              onclick="toggleSubscription('${h.id}',event)"
+              title="${subscribedHospitals.has(h.id)?'Turn off notifications':'Notify me when crowd drops'}">
+              ${subscribedHospitals.has(h.id)?'🔔':'🔕'}
+            </button>
             <div class="hct-name">${h.name}</div>
           </div>
           <div class="hosp-card-body">
@@ -274,45 +344,36 @@
         </div>`).join("");
     }
 
-    /* ── Modal open ── */
+    /* ── Modal (unchanged) ── */
     function openModal(id){
-      const h=allHospitals.find(h=>h.id===id);
-      if(!h)return;
-
+      const h = allHospitals.find(h=>h.id===id);
+      if(!h) return;
       document.getElementById("modalOverlay").classList.add("open");
-
-      // Populate static fields
-      document.getElementById("mName").textContent=h.name;
-      document.getElementById("mAddr").textContent="📍 "+h.address;
-      document.getElementById("mCrowd").innerHTML=`<span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>`;
-      document.getElementById("mWait").textContent=waitTime(h.crowd);
-      document.getElementById("mUpdated").textContent=formatTimestamp(h.lastUpdated);
-
-      // Call button
-      document.getElementById("mCallBtn").onclick=()=>window.location.href=`tel:${h.phone||""}`;
-
-      // ── Department listener (real-time) ──
+      document.getElementById("mName").textContent    = h.name;
+      document.getElementById("mAddr").textContent    = "📍 "+h.address;
+      document.getElementById("mCrowd").innerHTML     = `<span class="badge ${h.crowd}">${h.crowd.toUpperCase()}</span>`;
+      document.getElementById("mWait").textContent    = waitTime(h.crowd);
+      document.getElementById("mUpdated").textContent = formatTimestamp(h.lastUpdated);
+      document.getElementById("mCallBtn").onclick     = ()=>window.location.href=`tel:${h.phone||""}`;
       if(currentDeptUnsub){ currentDeptUnsub(); currentDeptUnsub=null; }
-      document.getElementById("mDeptGrid").innerHTML=`<div class="dept-no-data">Loading departments...</div>`;
-
-      currentDeptUnsub=db.collection("hospitals").doc(id)
+      document.getElementById("mDeptGrid").innerHTML  = `<div class="dept-no-data">Loading departments...</div>`;
+      currentDeptUnsub = db.collection("hospitals").doc(id)
         .collection("departments")
         .onSnapshot(snap=>{
-          const depts=snap.docs.map(d=>({id:d.id,...d.data()}));
-          renderDeptGrid(depts);
+          renderDeptGrid(snap.docs.map(d=>({id:d.id,...d.data()})));
         });
     }
 
     function renderDeptGrid(depts){
-      const grid=document.getElementById("mDeptGrid");
+      const grid = document.getElementById("mDeptGrid");
       if(!depts.length){
-        grid.innerHTML=`<div class="dept-no-data">No department data available yet.</div>`;
+        grid.innerHTML = `<div class="dept-no-data">No department data available yet.</div>`;
         return;
       }
-      const byId={};
+      const byId = {};
       depts.forEach(d=>byId[d.id]=d);
-      const ordered=DEPT_ORDER.filter(id=>byId[id]).map(id=>byId[id]);
-      grid.innerHTML=ordered.map(d=>`
+      const ordered = DEPT_ORDER.filter(id=>byId[id]).map(id=>byId[id]);
+      grid.innerHTML = ordered.map(d=>`
         <div class="dept-status-card">
           <span class="dsc-name">${DEPT_LABELS[d.id]||d.id}</span>
           <span class="badge ${d.crowd}">${(d.crowd||"").toUpperCase()}</span>
@@ -321,7 +382,7 @@
     }
 
     function closeModal(e){
-      if(e.target.id==="modalOverlay")closeModalBtn();
+      if(e.target.id==="modalOverlay") closeModalBtn();
     }
     function closeModalBtn(){
       document.getElementById("modalOverlay").classList.remove("open");
