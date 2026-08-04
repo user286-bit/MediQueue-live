@@ -1,8 +1,4 @@
-// ============================================================
-//  FIREBASE CONFIG
-//  Replace the values below with your own Firebase project
-//  Go to: console.firebase.google.com → Project Settings → SDk
-// ============================================================
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,10 +10,11 @@ const firebaseConfig = {
   appId: "1:327995599743:web:91a7bef3150fde97ce484a"
 };
 
-// ✅ Add admin Gmail addresses here (only these can access /admin.html)
+// only these can access /admin.html
 const ADMIN_EMAILS = [
   "admin@yourhospital.com",
-  "maryamahmed2k26@gmail.com"       // ← Replace with your Gmail
+  "maryamahmed2k26@gmail.com",
+  "rumaisaelyas@gmail.com"       
 ];
 
 // Initialize Firebase
